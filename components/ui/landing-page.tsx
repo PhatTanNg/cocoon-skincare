@@ -17,7 +17,6 @@ import {
   Droplets,
   Globe,
   CheckCircle,
-  Sparkles,
   Send,
   ArrowUpRight,
 } from "lucide-react"
@@ -227,16 +226,28 @@ export function CocoonLanding() {
           </nav>
 
           <div className="hidden items-center gap-2 md:flex">
-            <Button variant="ghost" size="sm" className="rounded-xl font-medium" style={{ color: C.sage }} asChild>
-              <a href="https://cocoonvietnam.com/en" target="_blank" rel="noopener noreferrer">
-                Tìm hiểu thêm
-              </a>
-            </Button>
-            <Button size="sm" className="rounded-full px-5 font-semibold text-white" style={{ background: `linear-gradient(135deg, ${C.forest} 0%, #2d6a4f 100%)`, boxShadow: "0 2px 10px rgba(26,61,43,0.25)", letterSpacing: "0.02em" }} asChild>
-              <a href="https://shopee.vn/cocoonvietnam" target="_blank" rel="noopener noreferrer">
-                Mua ngay
-              </a>
-            </Button>
+            <Link
+              href="https://cocoonvietnam.com/en"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-xl px-3 py-2 font-medium text-sm transition-colors"
+              style={{ color: C.sage }}
+            >
+              Tìm hiểu thêm
+            </Link>
+            <Link
+              href="https://shopee.vn/cocoonvietnam"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full px-5 py-2.5 font-semibold text-white text-sm transition-all whitespace-nowrap"
+              style={{
+                background: `linear-gradient(135deg, ${C.forest} 0%, #2d6a4f 100%)`,
+                boxShadow: "0 2px 10px rgba(26,61,43,0.25)",
+                letterSpacing: "0.02em",
+              }}
+            >
+              Mua ngay
+            </Link>
           </div>
 
           <button
@@ -279,21 +290,28 @@ export function CocoonLanding() {
               </motion.div>
             ))}
             <div className="mt-4 flex flex-col gap-2.5">
-              <Button
-                variant="outline"
-                className="w-full rounded-full font-medium"
+              <Link
+                href="https://cocoonvietnam.com/en"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full rounded-full px-4 py-2.5 font-medium text-center transition-all border"
                 style={{ borderColor: `${C.forest}40`, color: C.forest, letterSpacing: "0.02em" }}
-                asChild
               >
-                <a href="https://cocoonvietnam.com/en" target="_blank" rel="noopener noreferrer">
-                  Tìm hiểu thêm
-                </a>
-              </Button>
-              <Button className="w-full rounded-full font-semibold text-white" style={{ background: `linear-gradient(135deg, ${C.forest} 0%, #2d6a4f 100%)`, boxShadow: "0 2px 10px rgba(26,61,43,0.25)", letterSpacing: "0.02em" }} asChild>
-                <a href="https://shopee.vn/cocoonvietnam" target="_blank" rel="noopener noreferrer">
-                  Mua ngay
-                </a>
-              </Button>
+                Tìm hiểu thêm
+              </Link>
+              <Link
+                href="https://shopee.vn/cocoonvietnam"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full rounded-full px-4 py-2.5 font-semibold text-white text-center transition-all"
+                style={{
+                  background: `linear-gradient(135deg, ${C.forest} 0%, #2d6a4f 100%)`,
+                  boxShadow: "0 2px 10px rgba(26,61,43,0.25)",
+                  letterSpacing: "0.02em",
+                }}
+              >
+                Mua ngay
+              </Link>
             </div>
           </nav>
         </motion.div>
@@ -364,29 +382,24 @@ export function CocoonLanding() {
                 </motion.p>
 
                 <motion.div variants={fadeUp} className="flex flex-col gap-3 sm:flex-row">
-                  <Button
-                    size="lg"
-                    className="group rounded-full px-8 font-semibold text-white"
+                  <Link
+                    href="#products"
+                    className="group rounded-full px-8 py-3 font-semibold text-white text-center transition-all whitespace-nowrap"
                     style={{
                       background: `linear-gradient(135deg, ${C.forest} 0%, #2d6a4f 100%)`,
                       boxShadow: "0 4px 18px rgba(26,61,43,0.3)",
                       letterSpacing: "0.025em",
                     }}
-                    asChild
                   >
-                    <a href="#products">
-                      Khám phá sản phẩm
-                    </a>
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="rounded-full px-8 font-medium"
+                    Khám phá sản phẩm
+                  </Link>
+                  <Link
+                    href="#about"
+                    className="rounded-full px-8 py-3 font-medium text-center transition-all border whitespace-nowrap"
                     style={{ borderColor: `${C.forest}45`, color: C.forest, letterSpacing: "0.025em" }}
-                    asChild
                   >
-                    <a href="#about">Câu chuyện của chúng tôi</a>
-                  </Button>
+                    Câu chuyện của chúng tôi
+                  </Link>
                 </motion.div>
 
                 <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-5 pt-1">
@@ -494,7 +507,7 @@ export function CocoonLanding() {
         {/* ── Stats Bar ── */}
         <section className="w-full py-12" style={{ backgroundColor: C.creamAlt }}>
           <div className="container mx-auto px-4 md:px-6">
-            <div className="grid grid-cols-2 divide-x divide-y lg:grid-cols-4 lg:divide-y-0" style={{ divideColor: `${C.forest}12` }}>
+            <div className="grid grid-cols-2 divide-x divide-y lg:grid-cols-4 lg:divide-y-0" style={{ borderColor: `${C.forest}12` }}>
               {stats.map((stat, i) => (
                 <motion.div
                   key={i}
@@ -753,21 +766,15 @@ export function CocoonLanding() {
                       >
                         {product.price}
                       </span>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="h-7 rounded-full px-3 text-xs font-medium"
+                      <a
+                        href="https://cocoonvietnam.com/en/collections/all"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="h-7 px-3 text-xs font-medium rounded-full transition-all border text-center inline-flex items-center whitespace-nowrap"
                         style={{ borderColor: `${C.forest}35`, color: C.forest, letterSpacing: "0.02em" }}
-                        asChild
                       >
-                        <a
-                          href="https://cocoonvietnam.com/en/collections/all"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Xem
-                        </a>
-                      </Button>
+                        Xem
+                      </a>
                     </div>
                   </div>
                 </motion.div>
@@ -776,25 +783,20 @@ export function CocoonLanding() {
 
             <div className="mt-12 flex justify-center">
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
-                <Button
-                  size="lg"
-                  className="group rounded-full px-10 font-semibold text-white"
+                <a
+                  href="https://cocoonvietnam.com/en/collections/all"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group rounded-full px-10 py-3 font-semibold text-white text-center transition-all inline-block whitespace-nowrap"
                   style={{
                     background: `linear-gradient(135deg, ${C.forest} 0%, #2d6a4f 100%)`,
                     boxShadow: "0 4px 18px rgba(26,61,43,0.28)",
                     fontSize: "1rem",
                     letterSpacing: "0.025em",
                   }}
-                  asChild
                 >
-                  <a
-                    href="https://cocoonvietnam.com/en/collections/all"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Xem tất cả sản phẩm
-                  </a>
-                </Button>
+                  Xem tất cả sản phẩm
+                </a>
               </motion.div>
             </div>
           </div>
