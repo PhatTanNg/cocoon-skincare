@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/jsngu/.claude/projects/c--Users-jsngu-cocoon-skincare/**)",
+      "Bash(npm run:*)",
+      "Bash(gh auth:*)",
+      "Bash(winget install:*)",
+      "Bash(powershell.exe -Command \"winget install --id GitHub.cli\")",
+      "Bash(powershell.exe -Command \"scoop install gh\")",
+      "Bash(powershell.exe -Command \"choco install gh -y\")",
+      "Bash(curl -sL https://github.com/cli/cli/releases/download/v2.67.0/gh_2.67.0_windows_amd64.zip -o /tmp/gh.zip)",
+      "Bash(unzip -o /tmp/gh.zip -d /tmp/gh)",
+      "Read(//tmp/**)",
+      "Bash(/tmp/gh/bin/gh.exe auth:*)",
+      "Bash(/tmp/gh/bin/gh.exe repo:*)"
+    ]
+  }
+}

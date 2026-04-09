@@ -7,7 +7,6 @@ import { motion } from "framer-motion"
 import {
   Menu,
   X,
-  ArrowRight,
   ChevronRight,
   MapPin,
   Leaf,
@@ -19,10 +18,7 @@ import {
   Globe,
   CheckCircle,
   Sparkles,
-  Users,
-  TrendingUp,
   Send,
-  Zap,
   ArrowUpRight,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -30,19 +26,22 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 
 // ── Animation variants ──────────────────────────────────────────────────────
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+const ease = [0.22, 1, 0.36, 1] as const
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease } },
 }
-
-const staggerContainer = {
+const stagger = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+  visible: { opacity: 1, transition: { staggerChildren: 0.12 } },
 }
-
-const itemFadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+const slideLeft = {
+  hidden: { opacity: 0, x: -40 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease } },
+}
+const slideRight = {
+  hidden: { opacity: 0, x: 40 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease } },
 }
 
 // ── Inline SVG social icons ─────────────────────────────────────────────────
@@ -77,7 +76,7 @@ const products = [
     ingredient: "Bí Đao Hậu Giang",
     benefit: "Kiểm soát dầu, bảo vệ khỏi tia UV, không bóng nhờn",
     price: "155.000₫",
-    image: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&q=80",
+    image: "/kem_chong_nang.jpg",
     tag: "Bán chạy nhất",
   },
   {
@@ -85,7 +84,7 @@ const products = [
     ingredient: "Hoa Sen Hậu Giang",
     benefit: "Dưỡng ẩm sâu, làm dịu và cân bằng độ pH",
     price: "165.000₫",
-    image: "https://images.unsplash.com/photo-1620756235543-8c4a02fd7d83?w=400&q=80",
+    image: "/nuoc_hoa_hong.png",
     tag: "Yêu thích nhất",
   },
   {
@@ -93,15 +92,15 @@ const products = [
     ingredient: "Cà Phê Đắk Lắk",
     benefit: "Tẩy tế bào chết, sáng da, chống oxy hóa",
     price: "145.000₫",
-    image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&q=80",
+    image: "/tay_da_chet.jpg",
     tag: "Đặc sản Việt Nam",
   },
   {
-    name: "Tẩy Trang Khổ Qua",
-    ingredient: "Khổ Qua (Mướp Đắng)",
+    name: "Tẩy Trang Bí Đao",
+    ingredient: "Bí Đao Hậu Giang",
     benefit: "Làm sạch sâu, kiểm soát mụn, làm mát da",
     price: "129.000₫",
-    image: "https://images.unsplash.com/photo-1614975059251-992f11792b9f?w=400&q=80",
+    image: "/tay trang bi dao.jpg",
     tag: "Dịu nhẹ",
   },
   {
@@ -109,16 +108,16 @@ const products = [
     ingredient: "Tinh Dầu Bưởi Việt Nam",
     benefit: "Giảm gãy rụng, tăng độ dày và sức sống cho tóc",
     price: "195.000₫",
-    image: "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400&q=80",
+    image: "/dau_duong_buoi.jpg",
     tag: "Chăm sóc tóc",
   },
 ]
 
 const stats = [
-  { value: "700K+", label: "Đánh giá xác thực", icon: <Star className="h-5 w-5" /> },
-  { value: "5/5 ⭐", label: "Trên Shopee & Lazada", icon: <Award className="h-5 w-5" /> },
-  { value: "1.4M+", label: "Người theo dõi", icon: <Users className="h-5 w-5" /> },
-  { value: "14×", label: "Tăng trưởng 2020–2022", icon: <TrendingUp className="h-5 w-5" /> },
+  { value: "700K+", label: "Đánh giá xác thực" },
+  { value: "5/5", label: "Trên Shopee & Lazada" },
+  { value: "1.4M+", label: "Người theo dõi" },
+  { value: "14×", label: "Tăng trưởng 2020–2022" },
 ]
 
 const awards = [
@@ -130,7 +129,8 @@ const awards = [
 
 const testimonials = [
   {
-    quote: "Kem chống nắng bí đao của Cocoon thật sự thay đổi cuộc sống! Da mình không còn bóng dầu sau 2 tiếng nữa.",
+    quote:
+      "Kem chống nắng bí đao của Cocoon thật sự thay đổi cuộc sống! Da mình không còn bóng dầu sau 2 tiếng nữa.",
     author: "Nguyễn Lan Anh",
     location: "Hà Nội",
   },
@@ -140,12 +140,14 @@ const testimonials = [
     location: "TP.HCM",
   },
   {
-    quote: "Là người theo chủ nghĩa thuần chay, mình rất vui khi tìm được thương hiệu Việt Nam chất lượng cao và có đạo đức.",
+    quote:
+      "Là người theo chủ nghĩa thuần chay, mình rất vui khi tìm được thương hiệu Việt Nam chất lượng cao và có đạo đức.",
     author: "Phạm Thu Hương",
     location: "Đà Nẵng",
   },
   {
-    quote: "Nước hoa hồng sen Hậu Giang nhẹ nhàng, thấm nhanh, không kích ứng da nhạy cảm của mình. Đã dùng hết 3 chai!",
+    quote:
+      "Nước hoa hồng sen Hậu Giang nhẹ nhàng, thấm nhanh, không kích ứng da nhạy cảm của mình. Đã dùng hết 3 chai!",
     author: "Lê Bảo Ngọc",
     location: "Cần Thơ",
   },
@@ -158,46 +160,66 @@ const navLinks = [
   { label: "Liên hệ", href: "#contact" },
 ]
 
+// ── Brand tokens ─────────────────────────────────────────────────────────────
+const C = {
+  forest: "#1a3d2b",
+  sage: "#52796f",
+  mint: "#84a98c",
+  lightMint: "#a8c5b0",
+  cream: "#faf6ee",
+  creamAlt: "#f4f0e8",
+  creamSection: "#eef4f0",
+  honey: "#c5962d",
+  bark: "#1c1a14",
+  warmGray: "#6b6358",
+}
+
 // ── Component ───────────────────────────────────────────────────────────────
 export function CocoonLanding() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [scrollY, setScrollY] = useState(0)
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY)
+    const handleScroll = () => setScrolled(window.scrollY > 50)
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div
+      style={{ fontFamily: "var(--font-be-vietnam-pro)", backgroundColor: C.cream, color: C.bark }}
+      className="flex min-h-screen flex-col"
+    >
       {/* ── Header ── */}
       <motion.header
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
-        className={`sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-shadow ${
-          scrollY > 50 ? "shadow-sm" : ""
-        }`}
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease }}
+        className="sticky top-0 z-50 w-full transition-all duration-300"
+        style={{
+          backgroundColor: scrolled ? "rgba(250,246,238,0.96)" : "rgba(250,246,238,0.7)",
+          backdropFilter: "blur(16px)",
+          borderBottom: scrolled ? `1px solid rgba(26,61,43,0.08)` : "1px solid transparent",
+          boxShadow: scrolled ? "0 2px 24px rgba(26,61,43,0.06)" : "none",
+        }}
       >
         <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
-          <Link href="/" className="flex items-center gap-2.5">
-            <motion.div
-              whileHover={{ rotate: 5, scale: 1.1 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              className="flex h-9 w-9 items-center justify-center rounded-2xl bg-green-600"
-            >
-              <Leaf className="h-5 w-5 text-white" />
-            </motion.div>
-            <span className="text-xl font-bold tracking-tight">Cocoon</span>
+          <Link href="/" className="flex flex-col leading-none">
+            <span style={{ fontFamily: "var(--font-lora)", fontSize: "1.5rem", fontWeight: 600, fontStyle: "italic", color: C.forest, letterSpacing: "-0.02em", lineHeight: 1 }}>
+              Cocoon
+            </span>
+            <span style={{ fontSize: "0.52rem", fontWeight: 600, letterSpacing: "0.24em", color: C.sage, textTransform: "uppercase", lineHeight: 1, marginTop: "4px" }}>
+              Original Vietnam
+            </span>
           </Link>
 
-          <nav className="hidden items-center gap-1 md:flex">
+          <nav className="hidden items-center gap-0.5 md:flex">
             {navLinks.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-xl px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                className="rounded-xl px-3.5 py-2 text-sm font-medium transition-colors hover:text-[#1a3d2b]"
+                style={{ color: C.warmGray }}
               >
                 {item.label}
               </Link>
@@ -205,12 +227,12 @@ export function CocoonLanding() {
           </nav>
 
           <div className="hidden items-center gap-2 md:flex">
-            <Button variant="ghost" size="sm" className="rounded-xl" asChild>
+            <Button variant="ghost" size="sm" className="rounded-xl font-medium" style={{ color: C.sage }} asChild>
               <a href="https://cocoonvietnam.com/en" target="_blank" rel="noopener noreferrer">
                 Tìm hiểu thêm
               </a>
             </Button>
-            <Button size="sm" className="rounded-xl bg-green-600 text-white hover:bg-green-700" asChild>
+            <Button size="sm" className="rounded-full px-5 font-semibold text-white" style={{ background: `linear-gradient(135deg, ${C.forest} 0%, #2d6a4f 100%)`, boxShadow: "0 2px 10px rgba(26,61,43,0.25)", letterSpacing: "0.02em" }} asChild>
               <a href="https://shopee.vn/cocoonvietnam" target="_blank" rel="noopener noreferrer">
                 Mua ngay
               </a>
@@ -218,7 +240,8 @@ export function CocoonLanding() {
           </div>
 
           <button
-            className="flex md:hidden"
+            className="flex rounded-xl p-2 transition-colors md:hidden"
+            style={{ color: C.forest }}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -230,520 +253,943 @@ export function CocoonLanding() {
       {/* ── Mobile Menu ── */}
       {isMenuOpen && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-40 bg-background pt-16 md:hidden"
+          className="fixed inset-0 z-40 pt-16 md:hidden"
+          style={{ backgroundColor: C.cream }}
         >
-          <motion.nav
-            variants={staggerContainer}
-            initial="hidden"
-            animate="visible"
-            className="container mx-auto grid gap-1 px-4 py-6"
-          >
-            {navLinks.map((item) => (
-              <motion.div key={item.href} variants={itemFadeIn}>
+          <nav className="container mx-auto grid gap-1 px-4 py-6">
+            {navLinks.map((item, i) => (
+              <motion.div
+                key={item.href}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.07 }}
+              >
                 <Link
                   href={item.href}
-                  className="flex items-center justify-between rounded-2xl px-4 py-3 text-base font-medium hover:bg-muted"
+                  className="flex items-center justify-between rounded-2xl px-4 py-3.5 text-base font-medium transition-colors hover:bg-[#eef4f0]"
+                  style={{ color: C.bark }}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.label}
-                  <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                  <ChevronRight className="h-4 w-4" style={{ color: C.sage }} />
                 </Link>
               </motion.div>
             ))}
-            <motion.div variants={itemFadeIn} className="mt-4 flex flex-col gap-2">
-              <Button variant="outline" className="w-full rounded-xl" asChild>
+            <div className="mt-4 flex flex-col gap-2.5">
+              <Button
+                variant="outline"
+                className="w-full rounded-full font-medium"
+                style={{ borderColor: `${C.forest}40`, color: C.forest, letterSpacing: "0.02em" }}
+                asChild
+              >
                 <a href="https://cocoonvietnam.com/en" target="_blank" rel="noopener noreferrer">
                   Tìm hiểu thêm
                 </a>
               </Button>
-              <Button className="w-full rounded-xl bg-green-600 text-white hover:bg-green-700" asChild>
+              <Button className="w-full rounded-full font-semibold text-white" style={{ background: `linear-gradient(135deg, ${C.forest} 0%, #2d6a4f 100%)`, boxShadow: "0 2px 10px rgba(26,61,43,0.25)", letterSpacing: "0.02em" }} asChild>
                 <a href="https://shopee.vn/cocoonvietnam" target="_blank" rel="noopener noreferrer">
                   Mua ngay
                 </a>
               </Button>
-            </motion.div>
-          </motion.nav>
+            </div>
+          </nav>
         </motion.div>
       )}
 
       <main className="flex-1">
         {/* ── Hero ── */}
-        <section className="w-full py-12 md:py-20 lg:py-28 overflow-hidden">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="rounded-3xl border bg-gradient-to-br from-green-50/60 to-background p-6 md:p-10 lg:p-14">
-              <div className="grid gap-10 lg:grid-cols-2 lg:gap-12 items-center">
-                <motion.div
-                  initial="hidden"
-                  animate="visible"
-                  variants={fadeIn}
-                  className="flex flex-col justify-center space-y-6"
-                >
-                  <div className="space-y-4">
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.5 }}
-                      className="inline-flex items-center gap-2 rounded-full border border-green-200 bg-green-50 px-3 py-1 text-sm text-green-700"
-                    >
-                      <Zap className="h-3.5 w-3.5" />
-                      Thuần chay • Không thử nghiệm trên động vật
-                    </motion.div>
+        <section className="relative w-full overflow-hidden" style={{ backgroundColor: C.cream }}>
+          {/* Ambient blobs */}
+          <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+            <div
+              className="absolute -right-32 -top-32 h-[500px] w-[500px] rounded-full opacity-40"
+              style={{ background: `radial-gradient(circle, ${C.creamSection} 0%, transparent 70%)` }}
+            />
+            <div
+              className="absolute -bottom-16 -left-28 h-[380px] w-[380px] rounded-full opacity-25"
+              style={{ background: `radial-gradient(circle, #e8dfc8 0%, transparent 70%)` }}
+            />
+          </div>
 
-                    <motion.h1
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.7, delay: 0.2 }}
-                      className="text-4xl font-bold tracking-tight sm:text-5xl xl:text-6xl"
-                    >
-                      Làn da khỏe từ{" "}
-                      <span className="text-green-600">thiên nhiên Việt Nam</span>
-                    </motion.h1>
-
-                    <motion.p
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.7, delay: 0.4 }}
-                      className="max-w-lg text-lg text-muted-foreground"
-                    >
-                      Mỹ phẩm thuần chay đầu tiên của Việt Nam đạt chứng nhận{" "}
-                      <strong>Leaping Bunny</strong>, <strong>PETA</strong> và{" "}
-                      <strong>The Vegan Society</strong>. Nguyên liệu từ Đắk Lắk, Hậu Giang, Bến Tre.
-                    </motion.p>
-                  </div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.6 }}
-                    className="flex flex-col gap-3 sm:flex-row"
+          <div className="container relative mx-auto px-4 py-16 md:px-6 md:py-24 lg:py-32">
+            <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+              {/* Left: copy */}
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={stagger}
+                className="flex flex-col justify-center space-y-8"
+              >
+                <motion.div variants={fadeUp} className="flex items-center gap-3">
+                  <div className="h-px w-10" style={{ backgroundColor: C.sage }} />
+                  <span
+                    style={{
+                      fontSize: "0.75rem",
+                      letterSpacing: "0.14em",
+                      textTransform: "uppercase",
+                      color: C.sage,
+                      fontWeight: 600,
+                    }}
                   >
-                    <Button size="lg" className="rounded-2xl bg-green-600 text-white hover:bg-green-700 group" asChild>
-                      <a href="#products">
-                        Khám phá sản phẩm
-                        <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                      </a>
-                    </Button>
-                    <Button variant="outline" size="lg" className="rounded-2xl" asChild>
-                      <a href="#about">Tìm hiểu thêm</a>
-                    </Button>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.8 }}
-                    className="flex flex-wrap items-center gap-4 pt-1"
-                  >
-                    {["Leaping Bunny", "PETA Certified", "The Vegan Society"].map((cert) => (
-                      <div key={cert} className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                        <CheckCircle className="h-4 w-4 text-green-600" />
-                        {cert}
-                      </div>
-                    ))}
-                  </motion.div>
+                    Thuần chay · Không thử nghiệm trên động vật
+                  </span>
                 </motion.div>
 
-                <motion.div
-                  initial={{ opacity: 0, x: 60 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                  className="relative"
+                <motion.h1
+                  variants={fadeUp}
+                  className="text-5xl font-bold sm:text-6xl xl:text-7xl"
+                  style={{ fontFamily: "var(--font-lora)", color: C.forest, lineHeight: 1.08 }}
                 >
-                  <div className="relative h-[360px] w-full overflow-hidden rounded-2xl md:h-[460px]">
+                  Làn da khỏe
+                  <br />
+                  từ{" "}
+                  <em style={{ fontStyle: "italic", color: C.sage }}>thiên nhiên</em>
+                  <br />
+                  Việt Nam
+                </motion.h1>
+
+                <motion.p
+                  variants={fadeUp}
+                  className="max-w-[480px] text-lg leading-relaxed"
+                  style={{ color: C.warmGray }}
+                >
+                  Mỹ phẩm thuần chay đầu tiên của Việt Nam đạt chứng nhận{" "}
+                  <strong style={{ color: C.forest, fontWeight: 600 }}>Leaping Bunny</strong>,{" "}
+                  <strong style={{ color: C.forest, fontWeight: 600 }}>PETA</strong> và{" "}
+                  <strong style={{ color: C.forest, fontWeight: 600 }}>The Vegan Society</strong>.
+                  Nguyên liệu từ Đắk Lắk, Hậu Giang, Bến Tre.
+                </motion.p>
+
+                <motion.div variants={fadeUp} className="flex flex-col gap-3 sm:flex-row">
+                  <Button
+                    size="lg"
+                    className="group rounded-full px-8 font-semibold text-white"
+                    style={{
+                      background: `linear-gradient(135deg, ${C.forest} 0%, #2d6a4f 100%)`,
+                      boxShadow: "0 4px 18px rgba(26,61,43,0.3)",
+                      letterSpacing: "0.025em",
+                    }}
+                    asChild
+                  >
+                    <a href="#products">
+                      Khám phá sản phẩm
+                    </a>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="rounded-full px-8 font-medium"
+                    style={{ borderColor: `${C.forest}45`, color: C.forest, letterSpacing: "0.025em" }}
+                    asChild
+                  >
+                    <a href="#about">Câu chuyện của chúng tôi</a>
+                  </Button>
+                </motion.div>
+
+                <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-5 pt-1">
+                  {["Leaping Bunny", "PETA Certified", "The Vegan Society"].map((cert) => (
+                    <div key={cert} className="flex items-center gap-2">
+                      <div
+                        className="flex h-5 w-5 items-center justify-center rounded-full"
+                        style={{ backgroundColor: C.forest }}
+                      >
+                        <CheckCircle className="h-3 w-3 text-white" style={{ strokeWidth: 2.5 }} />
+                      </div>
+                      <span style={{ fontSize: "0.8rem", color: C.sage, fontWeight: 600 }}>{cert}</span>
+                    </div>
+                  ))}
+                </motion.div>
+              </motion.div>
+
+              {/* Right: organic-shaped image */}
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={slideRight}
+                className="relative flex justify-center lg:justify-end"
+              >
+                <div className="relative w-full max-w-[500px]">
+                  <div
+                    className="relative overflow-hidden"
+                    style={{
+                      borderRadius: "60% 40% 55% 45% / 48% 50% 50% 52%",
+                      aspectRatio: "1 / 1.12",
+                    }}
+                  >
                     <Image
-                      src="https://images.unsplash.com/photo-1612817288484-6f916006741a?w=1200&q=80"
+                      src="/hero.jpg"
                       alt="Bộ sưu tập sản phẩm Cocoon Vietnam"
                       fill
                       className="object-cover"
                       priority
                       sizes="(max-width: 768px) 100vw, 50vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-tr from-green-900/20 to-transparent" />
+                    <div
+                      className="absolute inset-0"
+                      style={{ background: `linear-gradient(135deg, ${C.forest}20 0%, transparent 55%)` }}
+                    />
                   </div>
+
+                  {/* Floating review card */}
                   <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 1, type: "spring" }}
-                    className="absolute -bottom-4 -left-4 rounded-2xl border bg-background p-4 shadow-lg"
+                    initial={{ opacity: 0, scale: 0.85, y: 16 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ delay: 0.9, type: "spring", stiffness: 180, damping: 20 }}
+                    className="absolute -bottom-5 -left-4 md:-left-10"
+                    style={{
+                      backgroundColor: C.cream,
+                      borderRadius: "18px",
+                      padding: "14px 20px",
+                      boxShadow: `0 12px 40px rgba(26,61,43,0.12)`,
+                      border: `1px solid rgba(26,61,43,0.07)`,
+                    }}
                   >
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2.5">
                       <div className="flex">
                         {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                          <Star key={i} className="h-3.5 w-3.5" style={{ fill: C.honey, color: C.honey }} />
                         ))}
                       </div>
-                      <span className="text-sm font-semibold">700K+ đánh giá</span>
+                      <span style={{ fontSize: "0.875rem", fontWeight: 700, color: C.forest }}>700K+ đánh giá</span>
                     </div>
+                    <p style={{ fontSize: "0.72rem", color: C.warmGray, marginTop: "3px" }}>
+                      Từ 1.4M+ khách hàng tin dùng
+                    </p>
                   </motion.div>
+
+                  {/* Vegan floating badge */}
+                  <motion.div
+                    initial={{ opacity: 0, x: 16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 1.1 }}
+                    className="absolute -right-3 -top-5 md:-right-8"
+                    style={{
+                      backgroundColor: C.forest,
+                      borderRadius: "14px",
+                      padding: "10px 16px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                    }}
+                  >
+                    <Leaf className="h-4 w-4" style={{ color: C.lightMint }} />
+                    <span style={{ fontSize: "0.8rem", color: "white", fontWeight: 600 }}>100% Thuần Chay</span>
+                  </motion.div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Wave transition to stats */}
+          <div className="relative -mb-px h-14 overflow-hidden" aria-hidden>
+            <svg className="absolute bottom-0 w-full" viewBox="0 0 1440 56" preserveAspectRatio="none" fill="none">
+              <path d="M0,28 C480,56 960,0 1440,28 L1440,56 L0,56 Z" fill={C.creamAlt} />
+            </svg>
+          </div>
+        </section>
+
+        {/* ── Stats Bar ── */}
+        <section className="w-full py-12" style={{ backgroundColor: C.creamAlt }}>
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="grid grid-cols-2 divide-x divide-y lg:grid-cols-4 lg:divide-y-0" style={{ divideColor: `${C.forest}12` }}>
+              {stats.map((stat, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08, duration: 0.55, ease }}
+                  className="flex flex-col items-center justify-center px-6 py-6 text-center"
+                >
+                  <div
+                    className="mb-3 h-0.5 w-8 rounded-full"
+                    style={{ backgroundColor: C.honey }}
+                  />
+                  <div
+                    style={{
+                      fontFamily: "var(--font-lora)",
+                      fontSize: "2rem",
+                      fontWeight: 700,
+                      color: C.forest,
+                      lineHeight: 1,
+                      letterSpacing: "-0.02em",
+                    }}
+                  >
+                    {stat.value}
+                  </div>
+                  <div style={{ fontSize: "0.75rem", color: C.sage, marginTop: "6px", lineHeight: 1.4 }}>{stat.label}</div>
                 </motion.div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
 
         {/* ── Why Cocoon ── */}
-        <section id="about" className="w-full py-12 md:py-20">
+        <section id="about" className="w-full py-20 md:py-28" style={{ backgroundColor: C.cream }}>
           <div className="container mx-auto px-4 md:px-6">
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              variants={fadeIn}
-              className="rounded-3xl border bg-muted/20 p-6 md:p-10"
+              variants={stagger}
+              className="mb-14 text-center"
             >
-              <div className="mb-10 text-center">
-                <div className="mb-3 inline-block rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-700">
+              <motion.div variants={fadeUp} className="mb-5 flex items-center justify-center gap-3">
+                <div className="h-px w-12" style={{ backgroundColor: C.lightMint }} />
+                <span
+                  style={{
+                    fontSize: "0.75rem",
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                    color: C.sage,
+                    fontWeight: 600,
+                  }}
+                >
                   Tại sao chọn Cocoon?
-                </div>
-                <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-                  Vì bạn xứng đáng với điều tốt nhất
-                </h2>
-                <p className="mx-auto mt-4 max-w-2xl text-muted-foreground md:text-lg">
-                  Cocoon kết hợp trí tuệ thiên nhiên Việt Nam với công nghệ hiện đại để mang lại sản phẩm thuần chay chất lượng quốc tế.
-                </p>
-              </div>
-
-              <motion.div
-                variants={staggerContainer}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
-              >
-                {[
-                  {
-                    icon: <Leaf className="h-7 w-7 text-green-600" />,
-                    title: "100% Thuần Chay",
-                    desc: "Không thành phần từ động vật. Chứng nhận bởi The Vegan Society — tiêu chuẩn quốc tế khắt khe nhất.",
-                  },
-                  {
-                    icon: <Globe className="h-7 w-7 text-green-600" />,
-                    title: "Nguyên Liệu Việt Nam",
-                    desc: "Cà phê Đắk Lắk, sen Hậu Giang, bưởi, bí đao, khổ qua — hương vị từ mảnh đất hình chữ S.",
-                  },
-                  {
-                    icon: <ShieldCheck className="h-7 w-7 text-green-600" />,
-                    title: "3 Chứng Nhận Quốc Tế",
-                    desc: "Thương hiệu Việt Nam đầu tiên đạt đồng thời Leaping Bunny, PETA và The Vegan Society.",
-                  },
-                  {
-                    icon: <Heart className="h-7 w-7 text-green-600" />,
-                    title: "Không Hóa Chất Độc Hại",
-                    desc: "Không sulfate, không paraben, không hương liệu tổng hợp. An toàn cho da nhạy cảm và thai phụ.",
-                  },
-                ].map((item, i) => (
-                  <motion.div
-                    key={i}
-                    variants={itemFadeIn}
-                    whileHover={{ y: -6 }}
-                    className="group relative overflow-hidden rounded-2xl border bg-background p-6 shadow-sm transition-shadow hover:shadow-md"
-                  >
-                    <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-green-50 transition-all duration-300 group-hover:bg-green-100" />
-                    <div className="relative">
-                      <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-green-50">
-                        {item.icon}
-                      </div>
-                      <h3 className="mb-2 font-semibold">{item.title}</h3>
-                      <p className="text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
-                    </div>
-                  </motion.div>
-                ))}
+                </span>
+                <div className="h-px w-12" style={{ backgroundColor: C.lightMint }} />
               </motion.div>
+              <motion.h2
+                variants={fadeUp}
+                className="mx-auto text-4xl font-bold sm:text-5xl"
+                style={{ fontFamily: "var(--font-lora)", color: C.forest, lineHeight: 1.12, maxWidth: "640px" }}
+              >
+                Vì bạn xứng đáng với{" "}
+                <em style={{ fontStyle: "italic", color: C.sage }}>điều tốt nhất</em>
+              </motion.h2>
+              <motion.p
+                variants={fadeUp}
+                className="mx-auto mt-5 max-w-xl text-lg leading-relaxed"
+                style={{ color: C.warmGray }}
+              >
+                Cocoon kết hợp trí tuệ thiên nhiên Việt Nam với công nghệ hiện đại để mang lại sản phẩm thuần chay
+                chất lượng quốc tế.
+              </motion.p>
+            </motion.div>
+
+            <motion.div
+              variants={stagger}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
+            >
+              {[
+                {
+                  icon: <Leaf className="h-7 w-7" style={{ color: C.forest }} />,
+                  title: "100% Thuần Chay",
+                  desc: "Không thành phần từ động vật. Chứng nhận bởi The Vegan Society — tiêu chuẩn quốc tế khắt khe nhất.",
+                },
+                {
+                  icon: <Globe className="h-7 w-7" style={{ color: C.forest }} />,
+                  title: "Nguyên Liệu Việt Nam",
+                  desc: "Cà phê Đắk Lắk, sen Hậu Giang, bưởi, bí đao, khổ qua — hương vị từ mảnh đất hình chữ S.",
+                },
+                {
+                  icon: <ShieldCheck className="h-7 w-7" style={{ color: C.forest }} />,
+                  title: "3 Chứng Nhận Quốc Tế",
+                  desc: "Thương hiệu Việt Nam đầu tiên đạt đồng thời Leaping Bunny, PETA và The Vegan Society.",
+                },
+                {
+                  icon: <Heart className="h-7 w-7" style={{ color: C.forest }} />,
+                  title: "Không Hóa Chất Độc Hại",
+                  desc: "Không sulfate, không paraben, không hương liệu tổng hợp. An toàn cho da nhạy cảm và thai phụ.",
+                },
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  variants={fadeUp}
+                  whileHover={{ y: -6, boxShadow: `0 20px 40px rgba(26,61,43,0.1)` }}
+                  className="flex flex-col rounded-3xl p-7 transition-all duration-300"
+                  style={{
+                    backgroundColor: "white",
+                    border: `1px solid rgba(26,61,43,0.06)`,
+                    boxShadow: `0 4px 20px rgba(26,61,43,0.05)`,
+                  }}
+                >
+                  <div
+                    className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl"
+                    style={{ backgroundColor: C.creamSection }}
+                  >
+                    {item.icon}
+                  </div>
+                  <h3
+                    style={{
+                      fontFamily: "var(--font-lora)",
+                      fontSize: "1.15rem",
+                      fontWeight: 700,
+                      color: C.forest,
+                      marginBottom: "10px",
+                    }}
+                  >
+                    {item.title}
+                  </h3>
+                  <p style={{ fontSize: "0.875rem", color: C.warmGray, lineHeight: 1.72 }}>{item.desc}</p>
+                </motion.div>
+              ))}
             </motion.div>
           </div>
         </section>
 
         {/* ── Products ── */}
-        <section id="products" className="w-full py-12 md:py-20">
+        <section id="products" className="w-full py-20 md:py-28" style={{ backgroundColor: C.creamAlt }}>
           <div className="container mx-auto px-4 md:px-6">
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              variants={fadeIn}
-              className="rounded-3xl border p-6 md:p-10"
+              variants={stagger}
+              className="mb-14 text-center"
             >
-              <div className="mb-10 text-center">
-                <div className="mb-3 inline-block rounded-full bg-muted px-3 py-1 text-sm font-medium">
+              <motion.div variants={fadeUp} className="mb-5 flex items-center justify-center gap-3">
+                <div className="h-px w-12" style={{ backgroundColor: C.lightMint }} />
+                <span
+                  style={{
+                    fontSize: "0.75rem",
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                    color: C.sage,
+                    fontWeight: 600,
+                  }}
+                >
                   Sản phẩm nổi bật
-                </div>
-                <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-                  Bộ sưu tập từ thiên nhiên Việt Nam
-                </h2>
-                <p className="mx-auto mt-4 max-w-2xl text-muted-foreground md:text-lg">
-                  Mỗi sản phẩm là một câu chuyện về vùng đất và nguyên liệu đặc trưng của Việt Nam.
-                </p>
-              </div>
-
-              <motion.div
-                variants={staggerContainer}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5"
-              >
-                {products.map((product, i) => (
-                  <motion.div
-                    key={i}
-                    variants={itemFadeIn}
-                    whileHover={{ y: -8 }}
-                    className="group flex flex-col overflow-hidden rounded-2xl border bg-background shadow-sm transition-shadow hover:shadow-md"
-                  >
-                    <div className="relative h-52 overflow-hidden bg-muted">
-                      <Image
-                        src={product.image}
-                        alt={product.name}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-                      <span className="absolute left-3 top-3 rounded-full bg-green-600 px-2.5 py-0.5 text-xs font-medium text-white">
-                        {product.tag}
-                      </span>
-                      <a
-                        href="https://cocoonvietnam.com/en/collections/all"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-foreground opacity-0 shadow transition-opacity group-hover:opacity-100"
-                      >
-                        <ArrowUpRight className="h-4 w-4" />
-                      </a>
-                    </div>
-                    <div className="flex flex-1 flex-col p-4">
-                      <div className="mb-1 flex items-center gap-1 text-xs text-green-600">
-                        <Droplets className="h-3 w-3" />
-                        {product.ingredient}
-                      </div>
-                      <h3 className="mb-2 text-sm font-semibold leading-tight">{product.name}</h3>
-                      <p className="mb-4 flex-1 text-xs leading-relaxed text-muted-foreground">
-                        {product.benefit}
-                      </p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm font-bold text-green-700">{product.price}</span>
-                        <Button size="sm" variant="outline" className="rounded-xl h-8 text-xs" asChild>
-                          <a href="https://cocoonvietnam.com/en/collections/all" target="_blank" rel="noopener noreferrer">
-                            Xem <ArrowRight className="ml-1 h-3 w-3" />
-                          </a>
-                        </Button>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
+                </span>
+                <div className="h-px w-12" style={{ backgroundColor: C.lightMint }} />
               </motion.div>
+              <motion.h2
+                variants={fadeUp}
+                className="mx-auto text-4xl font-bold sm:text-5xl"
+                style={{ fontFamily: "var(--font-lora)", color: C.forest, lineHeight: 1.12, maxWidth: "640px" }}
+              >
+                Bộ sưu tập từ{" "}
+                <em style={{ fontStyle: "italic", color: C.sage }}>thiên nhiên Việt Nam</em>
+              </motion.h2>
+              <motion.p
+                variants={fadeUp}
+                className="mx-auto mt-5 max-w-xl text-lg leading-relaxed"
+                style={{ color: C.warmGray }}
+              >
+                Mỗi sản phẩm là một câu chuyện về vùng đất và nguyên liệu đặc trưng của Việt Nam.
+              </motion.p>
+            </motion.div>
 
-              <div className="mt-8 flex justify-center">
-                <Button size="lg" className="rounded-2xl bg-green-600 text-white hover:bg-green-700 group" asChild>
-                  <a href="https://cocoonvietnam.com/en/collections/all" target="_blank" rel="noopener noreferrer">
+            <motion.div
+              variants={stagger}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5"
+            >
+              {products.map((product, i) => (
+                <motion.div
+                  key={i}
+                  variants={fadeUp}
+                  whileHover={{ y: -8 }}
+                  className="group flex flex-col overflow-hidden rounded-3xl transition-all duration-300"
+                  style={{
+                    backgroundColor: "white",
+                    boxShadow: `0 4px 20px rgba(26,61,43,0.07)`,
+                    border: `1px solid rgba(26,61,43,0.06)`,
+                  }}
+                >
+                  <div
+                    className="relative overflow-hidden"
+                    style={{ height: "224px", backgroundColor: C.creamSection }}
+                  >
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/15 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                    <span
+                      className="absolute left-3 top-3 rounded-full px-3 py-1 text-xs font-semibold text-white"
+                      style={{ backgroundColor: C.forest }}
+                    >
+                      {product.tag}
+                    </span>
+                    <a
+                      href="https://cocoonvietnam.com/en/collections/all"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 opacity-0 shadow-md transition-all duration-200 hover:scale-110 group-hover:opacity-100"
+                      style={{ color: C.forest }}
+                    >
+                      <ArrowUpRight className="h-4 w-4" />
+                    </a>
+                  </div>
+
+                  <div className="flex flex-1 flex-col p-5">
+                    <div className="mb-2 flex items-center gap-1.5">
+                      <Droplets className="h-3.5 w-3.5" style={{ color: C.sage }} />
+                      <span
+                        style={{
+                          fontSize: "0.68rem",
+                          color: C.sage,
+                          fontWeight: 600,
+                          textTransform: "uppercase",
+                          letterSpacing: "0.06em",
+                        }}
+                      >
+                        {product.ingredient}
+                      </span>
+                    </div>
+                    <h3
+                      style={{ fontSize: "0.9rem", fontWeight: 700, color: C.forest, marginBottom: "8px", lineHeight: 1.4 }}
+                    >
+                      {product.name}
+                    </h3>
+                    <p style={{ fontSize: "0.8rem", color: C.warmGray, lineHeight: 1.65, flex: 1 }}>
+                      {product.benefit}
+                    </p>
+                    <div className="mt-4 flex items-center justify-between">
+                      <span
+                        style={{ fontFamily: "var(--font-lora)", fontSize: "1.1rem", fontWeight: 700, color: C.honey }}
+                      >
+                        {product.price}
+                      </span>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="h-7 rounded-full px-3 text-xs font-medium"
+                        style={{ borderColor: `${C.forest}35`, color: C.forest, letterSpacing: "0.02em" }}
+                        asChild
+                      >
+                        <a
+                          href="https://cocoonvietnam.com/en/collections/all"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Xem
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            <div className="mt-12 flex justify-center">
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
+                <Button
+                  size="lg"
+                  className="group rounded-full px-10 font-semibold text-white"
+                  style={{
+                    background: `linear-gradient(135deg, ${C.forest} 0%, #2d6a4f 100%)`,
+                    boxShadow: "0 4px 18px rgba(26,61,43,0.28)",
+                    fontSize: "1rem",
+                    letterSpacing: "0.025em",
+                  }}
+                  asChild
+                >
+                  <a
+                    href="https://cocoonvietnam.com/en/collections/all"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     Xem tất cả sản phẩm
-                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </a>
                 </Button>
-              </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Awards ── */}
+        <section className="w-full py-20 md:py-28" style={{ backgroundColor: C.cream }}>
+          <div className="container mx-auto px-4 md:px-6">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={stagger}
+              className="mb-12 text-center"
+            >
+              <motion.h2
+                variants={fadeUp}
+                className="text-4xl font-bold sm:text-5xl"
+                style={{ fontFamily: "var(--font-lora)", color: C.forest, lineHeight: 1.12 }}
+              >
+                Giải thưởng &{" "}
+                <em style={{ fontStyle: "italic", color: C.sage }}>Công nhận</em>
+              </motion.h2>
+            </motion.div>
+
+            <motion.div
+              variants={stagger}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
+            >
+              {awards.map((award, i) => (
+                <motion.div
+                  key={i}
+                  variants={fadeUp}
+                  whileHover={{ y: -5, boxShadow: `0 20px 40px rgba(26,61,43,0.1)` }}
+                  className="flex flex-col items-center rounded-3xl p-7 text-center transition-all duration-300"
+                  style={{
+                    backgroundColor: "white",
+                    border: `1px solid rgba(26,61,43,0.06)`,
+                    boxShadow: `0 4px 20px rgba(26,61,43,0.05)`,
+                  }}
+                >
+                  <div
+                    className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl"
+                    style={{ backgroundColor: "#fef9ec" }}
+                  >
+                    <Award className="h-6 w-6" style={{ color: C.honey }} />
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "0.72rem",
+                      fontWeight: 700,
+                      color: C.sage,
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {award.year}
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-lora)",
+                      fontSize: "1.05rem",
+                      fontWeight: 700,
+                      color: C.forest,
+                      marginTop: "6px",
+                    }}
+                  >
+                    {award.title}
+                  </div>
+                  <div style={{ fontSize: "0.8rem", color: C.warmGray, marginTop: "5px", lineHeight: 1.5 }}>
+                    {award.desc}
+                  </div>
+                </motion.div>
+              ))}
             </motion.div>
           </div>
         </section>
 
-        {/* ── Social Proof ── */}
-        <section id="social-proof" className="w-full py-12 md:py-20">
+        {/* ── Testimonials ── */}
+        <section id="social-proof" className="w-full py-20 md:py-28" style={{ backgroundColor: C.cream }}>
           <div className="container mx-auto px-4 md:px-6">
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              variants={fadeIn}
-              className="rounded-3xl border bg-muted/20 p-6 md:p-10"
+              variants={stagger}
+              className="mb-14 text-center"
             >
-              {/* Stats */}
-              <motion.div
-                variants={staggerContainer}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="mb-10 grid grid-cols-2 gap-4 lg:grid-cols-4"
-              >
-                {stats.map((stat, i) => (
-                  <motion.div
-                    key={i}
-                    variants={itemFadeIn}
-                    className="flex flex-col items-center rounded-2xl border bg-background p-5 text-center shadow-sm"
-                  >
-                    <div className="mb-2 text-green-600">{stat.icon}</div>
-                    <div className="text-2xl font-bold sm:text-3xl">{stat.value}</div>
-                    <div className="mt-1 text-xs text-muted-foreground sm:text-sm">{stat.label}</div>
-                  </motion.div>
-                ))}
+              <motion.div variants={fadeUp} className="mb-3 flex items-center justify-center gap-3">
+                <div className="h-px w-10" style={{ backgroundColor: C.honey }} />
+                <span style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.2em", color: C.sage, textTransform: "uppercase" }}>Đánh giá thực tế</span>
+                <div className="h-px w-10" style={{ backgroundColor: C.honey }} />
               </motion.div>
-
-              {/* Awards */}
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeIn}
-                className="mb-10"
+              <motion.h2
+                variants={fadeUp}
+                className="text-4xl font-bold sm:text-5xl"
+                style={{ fontFamily: "var(--font-lora)", color: C.forest, lineHeight: 1.12 }}
               >
-                <h2 className="mb-6 text-center text-2xl font-bold sm:text-3xl">Giải thưởng & Công nhận</h2>
-                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                  {awards.map((award, i) => (
-                    <motion.div
-                      key={i}
-                      variants={itemFadeIn}
-                      whileHover={{ y: -4 }}
-                      className="flex flex-col items-center rounded-2xl border bg-background p-5 text-center shadow-sm"
-                    >
-                      <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-yellow-50">
-                        <Award className="h-5 w-5 text-yellow-500" />
-                      </div>
-                      <div className="text-xs font-medium text-muted-foreground">{award.year}</div>
-                      <div className="mt-1 text-sm font-bold">{award.title}</div>
-                      <div className="mt-1 text-xs text-muted-foreground">{award.desc}</div>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
+                Khách hàng{" "}
+                <em style={{ fontStyle: "italic", color: C.honey }}>nói gì?</em>
+              </motion.h2>
+            </motion.div>
 
-              {/* Testimonials */}
-              <div>
-                <h2 className="mb-6 text-center text-2xl font-bold sm:text-3xl">Khách hàng nói gì?</h2>
+            <motion.div
+              variants={stagger}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="grid gap-5 md:grid-cols-2"
+            >
+              {testimonials.map((t, i) => (
                 <motion.div
-                  variants={staggerContainer}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  className="grid gap-4 md:grid-cols-2"
+                  key={i}
+                  variants={fadeUp}
+                  whileHover={{ y: -4 }}
+                  className="relative overflow-hidden rounded-3xl bg-white p-8"
+                  style={{ boxShadow: "0 2px 24px rgba(26,61,43,0.07)" }}
                 >
-                  {testimonials.map((t, i) => (
-                    <motion.div
-                      key={i}
-                      variants={itemFadeIn}
-                      whileHover={{ y: -4 }}
-                      className="flex flex-col justify-between rounded-2xl border bg-background p-6 shadow-sm"
+                  {/* Honey accent top bar */}
+                  <div
+                    className="absolute left-8 top-0 h-0.5 w-12 rounded-full"
+                    style={{ backgroundColor: C.honey }}
+                  />
+
+                  {/* Decorative quote mark */}
+                  <div
+                    aria-hidden
+                    style={{
+                      fontFamily: "var(--font-lora)",
+                      fontSize: "6rem",
+                      lineHeight: 0.75,
+                      color: `${C.honey}18`,
+                      position: "absolute",
+                      top: "16px",
+                      right: "24px",
+                      fontWeight: 700,
+                      userSelect: "none",
+                    }}
+                  >
+                    &ldquo;
+                  </div>
+
+                  <div className="relative">
+                    <div className="mb-4 flex gap-0.5">
+                      {[...Array(5)].map((_, j) => (
+                        <Star key={j} className="h-3.5 w-3.5" style={{ fill: C.honey, color: C.honey }} />
+                      ))}
+                    </div>
+                    <blockquote
+                      style={{
+                        fontFamily: "var(--font-lora)",
+                        fontSize: "1.05rem",
+                        color: C.bark,
+                        fontStyle: "italic",
+                        lineHeight: 1.8,
+                      }}
                     >
-                      <div>
-                        <div className="mb-3 flex gap-0.5">
-                          {[...Array(5)].map((_, j) => (
-                            <Star key={j} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                          ))}
-                        </div>
-                        <blockquote className="text-sm leading-relaxed">"{t.quote}"</blockquote>
+                      &ldquo;{t.quote}&rdquo;
+                    </blockquote>
+                  </div>
+
+                  <div className="mt-6 flex items-center gap-3">
+                    <div
+                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
+                      style={{
+                        background: `${C.honey}18`,
+                        border: `1.5px solid ${C.honey}45`,
+                        fontFamily: "var(--font-lora)",
+                        fontSize: "1rem",
+                        fontWeight: 700,
+                        color: C.forest,
+                      }}
+                    >
+                      {t.author.charAt(0)}
+                    </div>
+                    <div>
+                      <div style={{ fontSize: "0.88rem", fontWeight: 600, color: C.forest }}>{t.author}</div>
+                      <div className="flex items-center gap-1" style={{ fontSize: "0.72rem", color: C.sage, marginTop: "2px" }}>
+                        <MapPin className="h-2.5 w-2.5" />
+                        {t.location}
                       </div>
-                      <div className="mt-4 flex items-center gap-3">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-green-100 text-sm font-semibold text-green-700">
-                          {t.author.charAt(0)}
-                        </div>
-                        <div>
-                          <div className="text-sm font-medium">{t.author}</div>
-                          <div className="text-xs text-muted-foreground">{t.location}</div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
+                    </div>
+                  </div>
                 </motion.div>
-              </div>
+              ))}
             </motion.div>
           </div>
         </section>
 
         {/* ── CTA Banner ── */}
-        <section className="w-full py-12 md:py-20">
-          <div className="container mx-auto px-4 md:px-6">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeIn}
-              className="rounded-3xl bg-green-600 p-8 text-center md:p-14"
+        <section className="w-full overflow-hidden">
+          <div className="grid lg:grid-cols-[1fr_1fr]">
+            {/* Left: CTA image */}
+            <div className="flex items-center justify-center" style={{ backgroundColor: C.creamAlt }}>
+              <Image
+                src="/cta.jpg"
+                alt="Cocoon Vietnam sản phẩm"
+                width={800}
+                height={600}
+                className="w-full h-auto"
+              />
+            </div>
+
+            {/* Right: cream CTA content */}
+            <div
+              className="flex flex-col justify-center px-10 py-16 md:px-16"
+              style={{ backgroundColor: C.cream }}
             >
-              <Sparkles className="mx-auto mb-4 h-10 w-10 text-green-200" />
-              <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">
-                Bắt đầu hành trình làn da khỏe mạnh
-              </h2>
-              <p className="mx-auto mb-8 max-w-xl text-green-100">
-                Khám phá hơn 50 sản phẩm thuần chay được hàng triệu người Việt tin dùng. Giá từ 29.000₫.
-              </p>
-              <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <Button size="lg" className="rounded-2xl bg-white font-semibold text-green-700 hover:bg-green-50" asChild>
-                  <a href="https://cocoonvietnam.com/en/collections/all" target="_blank" rel="noopener noreferrer">
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={stagger}
+              >
+                <motion.div variants={fadeUp} className="mb-4 h-0.5 w-10 rounded-full" style={{ backgroundColor: C.honey }} />
+                <motion.h2
+                  variants={fadeUp}
+                  className="text-4xl font-bold sm:text-5xl"
+                  style={{ fontFamily: "var(--font-lora)", color: C.forest, lineHeight: 1.1 }}
+                >
+                  Bắt đầu hành trình
+                  <br />
+                  <em style={{ fontStyle: "italic", color: C.sage }}>làn da khỏe mạnh</em>
+                </motion.h2>
+                <motion.p
+                  variants={fadeUp}
+                  className="mt-5 max-w-sm leading-relaxed"
+                  style={{ color: C.warmGray, fontSize: "0.95rem" }}
+                >
+                  Khám phá hơn 50 sản phẩm thuần chay được hàng triệu người Việt tin dùng.
+                </motion.p>
+                <motion.div variants={fadeUp} className="mt-8 flex flex-wrap gap-3">
+                  <Button
+                    size="lg"
+                    className="rounded-full px-8 font-semibold text-white"
+                    style={{
+                      background: `linear-gradient(135deg, ${C.forest} 0%, #2d6a4f 100%)`,
+                      boxShadow: "0 4px 18px rgba(26,61,43,0.3)",
+                      letterSpacing: "0.025em",
+                    }}
+                    onClick={() => window.open("https://cocoonvietnam.com/en/collections/all", "_blank")}
+                  >
                     Khám phá bộ sưu tập
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
-                <Button size="lg" variant="outline" className="rounded-2xl border-white text-white hover:bg-white/10" asChild>
-                  <a href="#about">Tìm hiểu thêm</a>
-                </Button>
-              </div>
-            </motion.div>
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="rounded-full px-8 font-semibold"
+                    style={{ borderColor: `${C.forest}45`, color: C.forest, letterSpacing: "0.025em" }}
+                    onClick={() => window.open("https://shopee.vn/cocoonvietnam", "_blank")}
+                  >
+                    Mua trên Shopee
+                  </Button>
+                </motion.div>
+                <motion.div variants={fadeUp} className="mt-8 flex flex-wrap items-center gap-5">
+                  {["700K+ đánh giá", "Thuần chay 100%", "Giao hàng toàn quốc"].map((item) => (
+                    <div key={item} className="flex items-center gap-2">
+                      <div className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: C.honey }} />
+                      <span style={{ fontSize: "0.75rem", color: C.sage, fontWeight: 500 }}>{item}</span>
+                    </div>
+                  ))}
+                </motion.div>
+              </motion.div>
+            </div>
           </div>
         </section>
 
         {/* ── Contact ── */}
-        <section id="contact" className="w-full py-12 md:py-20">
+        <section id="contact" className="w-full py-20 md:py-28" style={{ backgroundColor: C.creamAlt }}>
           <div className="container mx-auto px-4 md:px-6">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeIn}
-              className="grid gap-6 rounded-3xl border p-6 md:p-10 lg:grid-cols-2 lg:gap-10"
-            >
+            <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
+              {/* Left */}
               <motion.div
-                initial={{ opacity: 0, x: -40 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="space-y-6"
+                variants={slideLeft}
+                className="space-y-8"
               >
                 <div>
-                  <div className="mb-3 inline-block rounded-full bg-muted px-3 py-1 text-sm font-medium">
-                    Liên hệ
+                  <div className="mb-5 flex items-center gap-3">
+                    <div className="h-px w-10" style={{ backgroundColor: C.sage }} />
+                    <span
+                      style={{
+                        fontSize: "0.75rem",
+                        letterSpacing: "0.14em",
+                        textTransform: "uppercase",
+                        color: C.sage,
+                        fontWeight: 600,
+                      }}
+                    >
+                      Liên hệ
+                    </span>
                   </div>
-                  <h2 className="text-3xl font-bold tracking-tight">Hãy kết nối với chúng tôi</h2>
-                  <p className="mt-4 text-muted-foreground">
+                  <h2
+                    className="text-4xl font-bold sm:text-5xl"
+                    style={{ fontFamily: "var(--font-lora)", color: C.forest, lineHeight: 1.12 }}
+                  >
+                    Hãy kết nối
+                    <br />
+                    <em style={{ fontStyle: "italic", color: C.sage }}>với chúng tôi</em>
+                  </h2>
+                  <p className="mt-5 max-w-sm leading-relaxed" style={{ color: C.warmGray }}>
                     Có câu hỏi về sản phẩm? Cần tư vấn skincare? Đội ngũ Cocoon luôn sẵn sàng hỗ trợ bạn.
                   </p>
                 </div>
 
                 <div className="space-y-4">
-                  <motion.div whileHover={{ x: 4 }} className="flex items-start gap-3">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-green-50">
-                      <MapPin className="h-5 w-5 text-green-600" />
-                    </div>
-                    <div>
-                      <div className="font-medium">Địa chỉ</div>
-                      <div className="text-sm text-muted-foreground">
-                        457 Nguyễn Đình Chiểu, Phường 5, Quận 3, TP.HCM
-                      </div>
-                    </div>
-                  </motion.div>
-                  <motion.div whileHover={{ x: 4 }} className="flex items-start gap-3">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-green-50">
-                      <Globe className="h-5 w-5 text-green-600" />
-                    </div>
-                    <div>
-                      <div className="font-medium">Website</div>
-                      <a
-                        href="https://cocoonvietnam.com/en"
-                        className="text-sm text-green-600 hover:underline"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                  {[
+                    {
+                      icon: <MapPin className="h-5 w-5" style={{ color: C.forest }} />,
+                      label: "Địa chỉ",
+                      content: "457 Nguyễn Đình Chiểu, Phường 5, Quận 3, TP.HCM",
+                    },
+                    {
+                      icon: <Globe className="h-5 w-5" style={{ color: C.forest }} />,
+                      label: "Website",
+                      content: "cocoonvietnam.com",
+                      href: "https://cocoonvietnam.com/en",
+                    },
+                  ].map((item, i) => (
+                    <motion.div key={i} whileHover={{ x: 5 }} className="flex items-start gap-4">
+                      <div
+                        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl"
+                        style={{
+                          backgroundColor: "white",
+                          border: `1px solid rgba(26,61,43,0.08)`,
+                          boxShadow: `0 2px 10px rgba(26,61,43,0.05)`,
+                        }}
                       >
-                        cocoonvietnam.com
-                      </a>
-                    </div>
-                  </motion.div>
+                        {item.icon}
+                      </div>
+                      <div>
+                        <div
+                          style={{
+                            fontSize: "0.72rem",
+                            fontWeight: 700,
+                            color: C.sage,
+                            textTransform: "uppercase",
+                            letterSpacing: "0.08em",
+                          }}
+                        >
+                          {item.label}
+                        </div>
+                        {item.href ? (
+                          <a
+                            href={item.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:underline"
+                            style={{ fontSize: "0.9rem", color: C.forest, fontWeight: 500 }}
+                          >
+                            {item.content}
+                          </a>
+                        ) : (
+                          <div style={{ fontSize: "0.9rem", color: C.bark, marginTop: "2px" }}>{item.content}</div>
+                        )}
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
 
                 <div>
-                  <div className="mb-3 text-sm font-medium">Theo dõi Cocoon</div>
-                  <div className="flex gap-2">
+                  <div
+                    style={{
+                      fontSize: "0.72rem",
+                      fontWeight: 700,
+                      color: C.sage,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.08em",
+                      marginBottom: "14px",
+                    }}
+                  >
+                    Theo dõi Cocoon
+                  </div>
+                  <div className="flex gap-3">
                     {[
-                      { href: "https://www.facebook.com/CocoonVietnamOfficial", label: "Facebook", icon: <FacebookIcon className="h-5 w-5" /> },
-                      { href: "https://www.instagram.com/cocoon.vietnam", label: "Instagram", icon: <InstagramIcon className="h-5 w-5" /> },
-                      { href: "https://www.tiktok.com/@cocoon.vietnam", label: "TikTok", icon: <TiktokIcon className="h-5 w-5" /> },
+                      {
+                        href: "https://www.facebook.com/CocoonVietnamOfficial",
+                        label: "Facebook",
+                        icon: <FacebookIcon className="h-5 w-5" />,
+                      },
+                      {
+                        href: "https://www.instagram.com/cocoon.vietnam",
+                        label: "Instagram",
+                        icon: <InstagramIcon className="h-5 w-5" />,
+                      },
+                      {
+                        href: "https://www.tiktok.com/@cocoon.vietnam",
+                        label: "TikTok",
+                        icon: <TiktokIcon className="h-5 w-5" />,
+                      },
                     ].map((social) => (
                       <motion.a
                         key={social.label}
@@ -751,9 +1197,15 @@ export function CocoonLanding() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={social.label}
-                        whileHover={{ y: -4, scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        className="flex h-10 w-10 items-center justify-center rounded-2xl border text-muted-foreground transition-colors hover:border-green-600 hover:text-green-600"
+                        whileHover={{ y: -4, scale: 1.08 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex h-11 w-11 items-center justify-center rounded-2xl transition-colors"
+                        style={{
+                          backgroundColor: "white",
+                          border: `1px solid rgba(26,61,43,0.08)`,
+                          color: C.sage,
+                          boxShadow: `0 2px 10px rgba(26,61,43,0.05)`,
+                        }}
                       >
                         {social.icon}
                       </motion.a>
@@ -762,67 +1214,126 @@ export function CocoonLanding() {
                 </div>
               </motion.div>
 
+              {/* Right: contact form */}
               <motion.div
-                initial={{ opacity: 0, x: 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="rounded-2xl border bg-background p-6 shadow-sm"
+                variants={slideRight}
+                className="rounded-3xl p-8"
+                style={{
+                  backgroundColor: "white",
+                  boxShadow: `0 8px 40px rgba(26,61,43,0.08)`,
+                  border: `1px solid rgba(26,61,43,0.06)`,
+                }}
               >
-                <h3 className="mb-1 text-lg font-semibold">Gửi tin nhắn</h3>
-                <p className="mb-6 text-sm text-muted-foreground">Chúng tôi phản hồi trong vòng 24 giờ làm việc.</p>
+                <h3
+                  style={{ fontFamily: "var(--font-lora)", fontSize: "1.65rem", fontWeight: 700, color: C.forest }}
+                >
+                  Gửi tin nhắn
+                </h3>
+                <p style={{ fontSize: "0.875rem", color: C.warmGray, marginTop: "6px", marginBottom: "24px" }}>
+                  Chúng tôi phản hồi trong vòng 24 giờ làm việc.
+                </p>
                 <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-1.5">
-                      <label htmlFor="first-name" className="text-sm font-medium">Họ</label>
-                      <Input id="first-name" placeholder="Nguyễn" className="rounded-xl" />
+                      <label htmlFor="first-name" style={{ fontSize: "0.8rem", fontWeight: 600, color: C.forest }}>
+                        Họ
+                      </label>
+                      <Input
+                        id="first-name"
+                        placeholder="Nguyễn"
+                        className="rounded-xl"
+                        style={{ borderColor: `rgba(26,61,43,0.15)` }}
+                      />
                     </div>
                     <div className="space-y-1.5">
-                      <label htmlFor="last-name" className="text-sm font-medium">Tên</label>
-                      <Input id="last-name" placeholder="Lan Anh" className="rounded-xl" />
+                      <label htmlFor="last-name" style={{ fontSize: "0.8rem", fontWeight: 600, color: C.forest }}>
+                        Tên
+                      </label>
+                      <Input
+                        id="last-name"
+                        placeholder="Lan Anh"
+                        className="rounded-xl"
+                        style={{ borderColor: `rgba(26,61,43,0.15)` }}
+                      />
                     </div>
                   </div>
                   <div className="space-y-1.5">
-                    <label htmlFor="email" className="text-sm font-medium">Email</label>
-                    <Input id="email" type="email" placeholder="email@example.com" className="rounded-xl" />
+                    <label htmlFor="email" style={{ fontSize: "0.8rem", fontWeight: 600, color: C.forest }}>
+                      Email
+                    </label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="email@example.com"
+                      className="rounded-xl"
+                      style={{ borderColor: `rgba(26,61,43,0.15)` }}
+                    />
                   </div>
                   <div className="space-y-1.5">
-                    <label htmlFor="message" className="text-sm font-medium">Nội dung</label>
+                    <label htmlFor="message" style={{ fontSize: "0.8rem", fontWeight: 600, color: C.forest }}>
+                      Nội dung
+                    </label>
                     <Textarea
                       id="message"
                       placeholder="Bạn cần hỗ trợ gì về sản phẩm Cocoon?"
                       className="min-h-[120px] rounded-xl"
+                      style={{ borderColor: `rgba(26,61,43,0.15)` }}
                     />
                   </div>
-                  <Button type="submit" className="w-full rounded-xl bg-green-600 text-white hover:bg-green-700">
+                  <Button
+                    type="submit"
+                    className="w-full rounded-full font-semibold text-white"
+                    style={{
+                      background: `linear-gradient(135deg, ${C.forest} 0%, #2d6a4f 100%)`,
+                      boxShadow: "0 4px 16px rgba(26,61,43,0.25)",
+                      letterSpacing: "0.025em",
+                    }}
+                  >
                     <Send className="mr-2 h-4 w-4" />
                     Gửi tin nhắn
                   </Button>
                 </form>
               </motion.div>
-            </motion.div>
+            </div>
           </div>
         </section>
       </main>
 
       {/* ── Footer ── */}
-      <footer className="w-full border-t">
-        <div className="container mx-auto grid gap-8 px-4 py-12 md:px-6 lg:grid-cols-4">
-          <div className="space-y-4">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-green-600">
-                <Leaf className="h-4 w-4 text-white" />
-              </div>
-              <span className="text-lg font-bold">Cocoon</span>
+      <footer style={{ backgroundColor: C.forest }}>
+        <div className="container mx-auto grid gap-10 px-4 py-14 md:px-6 lg:grid-cols-4">
+          <div className="space-y-5">
+            <Link href="/" className="flex flex-col leading-none">
+              <span style={{ fontFamily: "var(--font-lora)", fontSize: "1.5rem", fontWeight: 600, fontStyle: "italic", color: "white", letterSpacing: "-0.02em", lineHeight: 1 }}>
+                Cocoon
+              </span>
+              <span style={{ fontSize: "0.52rem", fontWeight: 600, letterSpacing: "0.24em", color: `${C.lightMint}99`, textTransform: "uppercase", lineHeight: 1, marginTop: "4px" }}>
+                Original Vietnam
+              </span>
             </Link>
-            <p className="text-sm text-muted-foreground">
+            <p style={{ fontSize: "0.875rem", color: `${C.lightMint}88`, lineHeight: 1.75 }}>
               Mỹ phẩm thuần chay từ thiên nhiên Việt Nam. Chứng nhận Leaping Bunny, PETA và The Vegan Society.
             </p>
-            <div className="flex gap-2">
+            <div className="flex gap-2.5">
               {[
-                { href: "https://www.facebook.com/CocoonVietnamOfficial", label: "Facebook", icon: <FacebookIcon className="h-4 w-4" /> },
-                { href: "https://www.instagram.com/cocoon.vietnam", label: "Instagram", icon: <InstagramIcon className="h-4 w-4" /> },
-                { href: "https://www.tiktok.com/@cocoon.vietnam", label: "TikTok", icon: <TiktokIcon className="h-4 w-4" /> },
+                {
+                  href: "https://www.facebook.com/CocoonVietnamOfficial",
+                  label: "Facebook",
+                  icon: <FacebookIcon className="h-4 w-4" />,
+                },
+                {
+                  href: "https://www.instagram.com/cocoon.vietnam",
+                  label: "Instagram",
+                  icon: <InstagramIcon className="h-4 w-4" />,
+                },
+                {
+                  href: "https://www.tiktok.com/@cocoon.vietnam",
+                  label: "TikTok",
+                  icon: <TiktokIcon className="h-4 w-4" />,
+                },
               ].map((social) => (
                 <a
                   key={social.label}
@@ -830,7 +1341,8 @@ export function CocoonLanding() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className="text-muted-foreground transition-colors hover:text-foreground"
+                  className="transition-opacity hover:opacity-70"
+                  style={{ color: C.lightMint }}
                 >
                   {social.icon}
                 </a>
@@ -839,15 +1351,27 @@ export function CocoonLanding() {
           </div>
 
           <div>
-            <h3 className="mb-4 text-sm font-semibold">Sản phẩm</h3>
-            <nav className="flex flex-col gap-2 text-sm text-muted-foreground">
+            <h3
+              style={{
+                fontSize: "0.72rem",
+                fontWeight: 700,
+                color: "white",
+                textTransform: "uppercase",
+                letterSpacing: "0.1em",
+                marginBottom: "16px",
+              }}
+            >
+              Sản phẩm
+            </h3>
+            <nav className="flex flex-col gap-2.5">
               {["Chăm sóc da mặt", "Chăm sóc tóc", "Chống nắng", "Tẩy trang", "Tẩy da chết"].map((item) => (
                 <a
                   key={item}
                   href="https://cocoonvietnam.com/en/collections/all"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-foreground"
+                  className="transition-colors hover:text-white"
+                  style={{ fontSize: "0.875rem", color: `${C.lightMint}77` }}
                 >
                   {item}
                 </a>
@@ -856,45 +1380,100 @@ export function CocoonLanding() {
           </div>
 
           <div>
-            <h3 className="mb-4 text-sm font-semibold">Thương hiệu</h3>
-            <nav className="flex flex-col gap-2 text-sm text-muted-foreground">
-              <a href="#about" className="hover:text-foreground">Câu chuyện của chúng tôi</a>
-              <a href="#social-proof" className="hover:text-foreground">Giải thưởng</a>
-              <a href="https://cocoonvietnam.com/en" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">
-                Website chính thức
-              </a>
+            <h3
+              style={{
+                fontSize: "0.72rem",
+                fontWeight: 700,
+                color: "white",
+                textTransform: "uppercase",
+                letterSpacing: "0.1em",
+                marginBottom: "16px",
+              }}
+            >
+              Thương hiệu
+            </h3>
+            <nav className="flex flex-col gap-2.5">
+              {[
+                { label: "Câu chuyện của chúng tôi", href: "#about", external: false },
+                { label: "Giải thưởng", href: "#social-proof", external: false },
+                { label: "Website chính thức", href: "https://cocoonvietnam.com/en", external: true },
+              ].map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target={item.external ? "_blank" : undefined}
+                  rel={item.external ? "noopener noreferrer" : undefined}
+                  className="transition-colors hover:text-white"
+                  style={{ fontSize: "0.875rem", color: `${C.lightMint}77` }}
+                >
+                  {item.label}
+                </a>
+              ))}
             </nav>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold">Nhận ưu đãi độc quyền</h3>
-            <p className="text-sm text-muted-foreground">
+          <div className="space-y-5">
+            <h3
+              style={{
+                fontSize: "0.72rem",
+                fontWeight: 700,
+                color: "white",
+                textTransform: "uppercase",
+                letterSpacing: "0.1em",
+              }}
+            >
+              Nhận ưu đãi độc quyền
+            </h3>
+            <p style={{ fontSize: "0.875rem", color: `${C.lightMint}77`, lineHeight: 1.7 }}>
               Đăng ký nhận thông tin mới nhất về sản phẩm và khuyến mãi từ Cocoon.
             </p>
             <form className="flex gap-2" onSubmit={(e) => e.preventDefault()}>
-              <Input type="email" placeholder="Email của bạn" className="flex-1 rounded-xl" />
-              <Button type="submit" size="sm" className="rounded-xl bg-green-600 text-white hover:bg-green-700">
+              <Input
+                type="email"
+                placeholder="Email của bạn"
+                className="flex-1 rounded-xl"
+                style={{
+                  backgroundColor: "rgba(255,255,255,0.07)",
+                  border: "1px solid rgba(255,255,255,0.13)",
+                  color: "white",
+                }}
+              />
+              <Button
+                type="submit"
+                size="sm"
+                className="rounded-xl font-semibold"
+                style={{ backgroundColor: C.lightMint, color: C.forest }}
+              >
                 <Send className="h-4 w-4" />
               </Button>
             </form>
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-2">
               {["Leaping Bunny Certified", "PETA Cruelty Free", "The Vegan Society"].map((cert) => (
-                <div key={cert} className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                  <CheckCircle className="h-3.5 w-3.5 text-green-600" />
-                  {cert}
+                <div key={cert} className="flex items-center gap-2">
+                  <CheckCircle className="h-3.5 w-3.5" style={{ color: C.lightMint }} />
+                  <span style={{ fontSize: "0.78rem", color: `${C.lightMint}77` }}>{cert}</span>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="border-t">
-          <div className="container mx-auto flex flex-col items-center justify-between gap-2 px-4 py-5 text-xs text-muted-foreground md:flex-row md:px-6">
-            <p>© {new Date().getFullYear()} Cocoon Original Vietnam. Mọi quyền được bảo lưu.</p>
-            <div className="flex gap-4">
-              <a href="#" className="hover:text-foreground">Chính sách bảo mật</a>
-              <a href="#" className="hover:text-foreground">Điều khoản sử dụng</a>
-              <a href="#" className="hover:text-foreground">Chính sách đổi trả</a>
+        <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+          <div className="container mx-auto flex flex-col items-center justify-between gap-2 px-4 py-5 md:flex-row md:px-6">
+            <p style={{ fontSize: "0.75rem", color: `${C.lightMint}44` }}>
+              © {new Date().getFullYear()} Cocoon Original Vietnam. Mọi quyền được bảo lưu.
+            </p>
+            <div className="flex gap-5">
+              {["Chính sách bảo mật", "Điều khoản sử dụng", "Chính sách đổi trả"].map((item) => (
+                <a
+                  key={item}
+                  href="#"
+                  className="transition-colors hover:text-white"
+                  style={{ fontSize: "0.75rem", color: `${C.lightMint}44` }}
+                >
+                  {item}
+                </a>
+              ))}
             </div>
           </div>
         </div>
