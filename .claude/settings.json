@@ -12,7 +12,8 @@
       "Bash(unzip -o /tmp/gh.zip -d /tmp/gh)",
       "Read(//tmp/**)",
       "Bash(/tmp/gh/bin/gh.exe auth:*)",
-      "Bash(/tmp/gh/bin/gh.exe repo:*)"
+      "Bash(/tmp/gh/bin/gh.exe repo:*)",
+      "Bash(npx tsc:*)"
     ]
   }
 }
