@@ -1,8 +1,9 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 import Link from "next/link"
 
 export const metadata: Metadata = {
-  title: "Blog — Bí quyết làm đẹp từ thiên nhiên Việt Nam | Cocoon Vietnam",
+  title: "Blog — Bí quyết làm đẹp từ thiên nhiên Việt Nam | Cocoon Skin Routine",
   description:
     "Khám phá các bài viết về chăm sóc da, thành phần thiên nhiên và bí quyết làm đẹp từ Cocoon Vietnam — thương hiệu mỹ phẩm thuần chay đầu tiên của Việt Nam.",
 }
@@ -62,18 +63,13 @@ export default function BlogIndex() {
           }}
         >
           <Link href="/" style={{ textDecoration: "none" }}>
-            <span
-              style={{
-                fontFamily: "var(--font-lora)",
-                fontSize: "1.4rem",
-                fontWeight: 600,
-                fontStyle: "italic",
-                color: "white",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              Cocoon
-            </span>
+            <Image
+              src="/cocoon logo.jpg"
+              alt="Cocoon Skin Routine"
+              width={40}
+              height={40}
+              style={{ borderRadius: "9999px", objectFit: "cover", display: "block", outline: "2px solid rgba(255,255,255,0.15)", outlineOffset: "0px" }}
+            />
           </Link>
           <Link
             href="/"
@@ -184,20 +180,16 @@ export default function BlogIndex() {
       {/* Footer */}
       <footer style={{ backgroundColor: "#1a3d2b", padding: "24px 0", textAlign: "center" }}>
         <Link href="/" style={{ textDecoration: "none" }}>
-          <span
-            style={{
-              fontFamily: "var(--font-lora)",
-              fontSize: "1.2rem",
-              fontWeight: 600,
-              fontStyle: "italic",
-              color: "white",
-            }}
-          >
-            Cocoon
-          </span>
+          <Image
+            src="/cocoon logo.jpg"
+            alt="Cocoon Skin Routine"
+            width={40}
+            height={40}
+            style={{ borderRadius: "9999px", objectFit: "cover", display: "block", outline: "2px solid rgba(255,255,255,0.15)", outlineOffset: "0px" }}
+          />
         </Link>
         <p style={{ fontSize: "0.72rem", color: "rgba(168,197,176,0.4)", marginTop: "8px" }}>
-          © {new Date().getFullYear()} Cocoon Original Vietnam
+          © {new Date().getFullYear()} Cocoon Skin Routine
         </p>
       </footer>
     </div>

@@ -325,13 +325,15 @@ export function CocoonLanding() {
         }}
       >
         <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
-          <Link href="/" className="flex flex-col leading-none">
-            <span style={{ fontFamily: "var(--font-lora)", fontSize: "1.5rem", fontWeight: 600, fontStyle: "italic", color: C.forest, letterSpacing: "-0.02em", lineHeight: 1 }}>
-              Cocoon
-            </span>
-            <span style={{ fontSize: "0.52rem", fontWeight: 600, letterSpacing: "0.24em", color: C.sage, textTransform: "uppercase", lineHeight: 1, marginTop: "4px" }}>
-              Original Vietnam
-            </span>
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/cocoon logo.jpg"
+              alt="Cocoon Skin Routine"
+              width={44}
+              height={44}
+              className="rounded-full object-cover"
+              priority
+            />
           </Link>
 
           <nav className="hidden items-center gap-0.5 md:flex">
@@ -349,7 +351,7 @@ export function CocoonLanding() {
 
           <div className="hidden items-center gap-2 md:flex">
             <Link
-              href="https://cocoonvietnam.com/en"
+              href="https://kimquyenxinhdep.io.vn/"
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-xl px-3 py-2 font-medium text-sm transition-colors"
@@ -413,7 +415,7 @@ export function CocoonLanding() {
             ))}
             <div className="mt-4 flex flex-col gap-2.5">
               <Link
-                href="https://cocoonvietnam.com/en"
+                href="https://kimquyenxinhdep.io.vn/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full rounded-full px-4 py-2.5 font-medium text-center transition-all border"
@@ -480,6 +482,16 @@ export function CocoonLanding() {
                 variants={stagger}
                 className="flex flex-col justify-end min-h-[95svh] pb-14 space-y-5 lg:min-h-0 lg:justify-center lg:space-y-8"
               >
+                <motion.div variants={fadeUp} className="flex items-center">
+                  <Image
+                    src="/cocoon logo.jpg"
+                    alt="Cocoon Skin Routine"
+                    width={96}
+                    height={96}
+                    className="rounded-full object-cover shadow-lg"
+                  />
+                </motion.div>
+
                 <motion.div variants={fadeUp} className="flex items-center gap-3">
                   <div className="h-px w-10 bg-[#a8c5b0] lg:bg-[#52796f]" />
                   <span
@@ -882,7 +894,7 @@ export function CocoonLanding() {
                       {product.tag}
                     </span>
                     <a
-                      href="https://cocoonvietnam.com/en/collections/all"
+                      href="https://kimquyenxinhdep.io.vn/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 opacity-0 shadow-md transition-all duration-200 hover:scale-110 group-hover:opacity-100"
@@ -922,7 +934,7 @@ export function CocoonLanding() {
                         {product.price}
                       </span>
                       <a
-                        href="https://cocoonvietnam.com/en/collections/all"
+                        href="https://kimquyenxinhdep.io.vn/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="h-7 px-3 text-xs font-medium rounded-full transition-all border text-center inline-flex items-center whitespace-nowrap"
@@ -979,7 +991,7 @@ export function CocoonLanding() {
             <div className="mt-8 md:mt-12 flex justify-center">
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
                 <a
-                  href="https://cocoonvietnam.com/en/collections/all"
+                  href="https://kimquyenxinhdep.io.vn/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group rounded-full px-10 py-3 font-semibold text-white text-center transition-all inline-block whitespace-nowrap"
@@ -1376,7 +1388,7 @@ export function CocoonLanding() {
                       boxShadow: "0 4px 18px rgba(26,61,43,0.3)",
                       letterSpacing: "0.025em",
                     }}
-                    onClick={() => window.open("https://cocoonvietnam.com/en/collections/all", "_blank")}
+                    onClick={() => window.open("https://kimquyenxinhdep.io.vn/", "_blank")}
                   >
                     Khám phá bộ sưu tập
                   </Button>
@@ -1453,8 +1465,8 @@ export function CocoonLanding() {
                     {
                       icon: <Globe className="h-5 w-5" style={{ color: C.forest }} />,
                       label: "Website",
-                      content: "cocoonvietnam.com",
-                      href: "https://cocoonvietnam.com/en",
+                      content: "kimquyenxinhdep.io.vn",
+                      href: "https://kimquyenxinhdep.io.vn/",
                     },
                   ].map((item, i) => (
                     <motion.div key={i} whileHover={{ x: 5 }} className="flex items-start gap-4">
@@ -1514,17 +1526,12 @@ export function CocoonLanding() {
                   <div className="flex gap-3">
                     {[
                       {
-                        href: "https://www.facebook.com/CocoonVietnamOfficial",
+                        href: "https://www.facebook.com/CocoonSkinRoutine",
                         label: "Facebook",
                         icon: <FacebookIcon className="h-5 w-5" />,
                       },
                       {
-                        href: "https://www.instagram.com/cocoon.vietnam",
-                        label: "Instagram",
-                        icon: <InstagramIcon className="h-5 w-5" />,
-                      },
-                      {
-                        href: "https://www.tiktok.com/@cocoon.vietnam",
+                        href: "https://www.tiktok.com/@trucanh2401?_r=1&_t=ZS-95YuxGC8OA8",
                         label: "TikTok",
                         icon: <TiktokIcon className="h-5 w-5" />,
                       },
@@ -1725,13 +1732,14 @@ export function CocoonLanding() {
             className="flex flex-col gap-2 py-6 lg:flex-row lg:items-end lg:justify-between lg:py-10"
             style={{ borderBottom: `1px solid rgba(197,150,45,0.18)` }}
           >
-            <Link href="/" className="flex flex-col leading-none">
-              <span style={{ fontFamily: "var(--font-lora)", fontSize: "2rem", fontWeight: 600, fontStyle: "italic", color: "white", letterSpacing: "-0.02em", lineHeight: 1 }}>
-                Cocoon
-              </span>
-              <span style={{ fontSize: "0.5rem", fontWeight: 600, letterSpacing: "0.3em", color: `${C.lightMint}50`, textTransform: "uppercase", lineHeight: 1, marginTop: "6px" }}>
-                Original Vietnam
-              </span>
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/cocoon logo.jpg"
+                alt="Cocoon Skin Routine"
+                width={56}
+                height={56}
+                className="rounded-full object-cover ring-2 ring-white/10"
+              />
             </Link>
             <p className="hidden lg:block" style={{ fontSize: "0.72rem", color: `${C.lightMint}38`, letterSpacing: "0.06em", textTransform: "uppercase" }}>
               Thuần chay &nbsp;·&nbsp; Thiên nhiên Việt Nam &nbsp;·&nbsp; Leaping Bunny &nbsp;·&nbsp; PETA &nbsp;·&nbsp; The Vegan Society
@@ -1754,9 +1762,8 @@ export function CocoonLanding() {
               </div>
               <div className="flex gap-2.5">
                 {[
-                  { href: "https://www.facebook.com/CocoonVietnamOfficial", label: "Facebook", icon: <FacebookIcon className="h-4 w-4" /> },
-                  { href: "https://www.instagram.com/cocoon.vietnam", label: "Instagram", icon: <InstagramIcon className="h-4 w-4" /> },
-                  { href: "https://www.tiktok.com/@cocoon.vietnam", label: "TikTok", icon: <TiktokIcon className="h-4 w-4" /> },
+                  { href: "https://www.facebook.com/CocoonSkinRoutine", label: "Facebook", icon: <FacebookIcon className="h-4 w-4" /> },
+                  { href: "https://www.tiktok.com/@trucanh2401?_r=1&_t=ZS-95YuxGC8OA8", label: "TikTok", icon: <TiktokIcon className="h-4 w-4" /> },
                 ].map((social) => (
                   <a
                     key={social.label}
@@ -1791,7 +1798,7 @@ export function CocoonLanding() {
                 {["Chăm sóc da mặt", "Chăm sóc tóc", "Chống nắng", "Tẩy trang", "Tẩy da chết"].map((item) => (
                   <a
                     key={item}
-                    href="https://cocoonvietnam.com/en/collections/all"
+                    href="https://kimquyenxinhdep.io.vn/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group flex items-center gap-2 transition-colors hover:text-white"
@@ -1814,7 +1821,7 @@ export function CocoonLanding() {
                   { label: "Câu chuyện của chúng tôi", href: "#about", external: false },
                   { label: "Giải thưởng", href: "#social-proof", external: false },
                   { label: "Blog", href: "/blog", external: false },
-                  { label: "Website chính thức", href: "https://cocoonvietnam.com/en", external: true },
+                  { label: "Website chính thức", href: "https://kimquyenxinhdep.io.vn/", external: true },
                 ].map((item) => (
                   <a
                     key={item.label}
@@ -1868,7 +1875,7 @@ export function CocoonLanding() {
         <div style={{ borderTop: `1px solid rgba(197,150,45,0.12)` }}>
           <div className="container mx-auto flex flex-col items-center justify-between gap-2 px-4 py-5 md:flex-row md:px-6">
             <p style={{ fontSize: "0.72rem", color: `${C.lightMint}28`, letterSpacing: "0.03em" }}>
-              © {new Date().getFullYear()} Cocoon Original Vietnam. Mọi quyền được bảo lưu.
+              © {new Date().getFullYear()} Cocoon Skin Routine. Mọi quyền được bảo lưu.
             </p>
             <div className="flex flex-wrap justify-center gap-4 md:gap-5">
               {["Chính sách bảo mật", "Điều khoản sử dụng", "Chính sách đổi trả"].map((item) => (

@@ -1,8 +1,9 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 import Link from "next/link"
 
 export const metadata: Metadata = {
-  title: "Dầu Dừa Bến Tre: Từ Vùng Đất Dừa Đến Công Thức Dưỡng Ẩm Chuẩn | Cocoon Vietnam",
+  title: "Dầu Dừa Bến Tre: Từ Vùng Đất Dừa Đến Công Thức Dưỡng Ẩm Chuẩn | Cocoon Skin Routine",
   description:
     "Axit béo từ dừa xiêm Bến Tre giúp khóa ẩm 24 giờ, phục hồi hàng rào bảo vệ da và làm dịu da nhạy cảm. Tìm hiểu tại sao dầu dừa thuần chay Cocoon khác biệt so với dầu dừa thông thường.",
   openGraph: {
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
       "Axit béo từ dừa xiêm Bến Tre giúp khóa ẩm 24 giờ, phục hồi hàng rào bảo vệ da và làm dịu da nhạy cảm.",
     type: "article",
     locale: "vi_VN",
-    siteName: "Cocoon Vietnam",
+    siteName: "Cocoon Skin Routine",
   },
 }
 
@@ -22,9 +23,13 @@ export default function BlogPost() {
       <header style={{ backgroundColor: "#1a3d2b", padding: "16px 0" }}>
         <div style={{ maxWidth: "720px", margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <Link href="/" style={{ textDecoration: "none" }}>
-            <span style={{ fontFamily: "var(--font-lora)", fontSize: "1.4rem", fontWeight: 600, fontStyle: "italic", color: "white", letterSpacing: "-0.02em" }}>
-              Cocoon
-            </span>
+            <Image
+              src="/cocoon logo.jpg"
+              alt="Cocoon Skin Routine"
+              width={40}
+              height={40}
+              style={{ borderRadius: "9999px", objectFit: "cover", display: "block", outline: "2px solid rgba(255,255,255,0.15)", outlineOffset: "0px" }}
+            />
           </Link>
           <Link href="/blog" style={{ fontSize: "0.8rem", color: "rgba(168,197,176,0.7)", textDecoration: "none", letterSpacing: "0.06em", textTransform: "uppercase" }}>
             ← Blog
@@ -117,7 +122,7 @@ export default function BlogPost() {
             Dầu dừa ép lạnh 100% từ dừa xiêm Bến Tre — không tinh luyện, không hương liệu tổng hợp. Dưỡng da, tóc, và móng trong một sản phẩm thuần chay.
           </p>
           <Link
-            href="https://cocoonvietnam.com"
+            href="https://kimquyenxinhdep.io.vn/"
             target="_blank"
             rel="noopener noreferrer"
             style={{ display: "inline-block", backgroundColor: "#c5962d", color: "white", borderRadius: "100px", padding: "10px 24px", fontSize: "0.85rem", fontWeight: 600, textDecoration: "none" }}
@@ -129,13 +134,17 @@ export default function BlogPost() {
 
       {/* Footer */}
       <footer style={{ backgroundColor: "#1a3d2b", padding: "24px 0", textAlign: "center" }}>
-        <Link href="/" style={{ textDecoration: "none" }}>
-          <span style={{ fontFamily: "var(--font-lora)", fontSize: "1.2rem", fontWeight: 600, fontStyle: "italic", color: "white" }}>
-            Cocoon
-          </span>
+        <Link href="/" style={{ textDecoration: "none", display: "inline-block" }}>
+          <Image
+            src="/cocoon logo.jpg"
+            alt="Cocoon Skin Routine"
+            width={40}
+            height={40}
+            style={{ borderRadius: "9999px", objectFit: "cover", display: "block", outline: "2px solid rgba(255,255,255,0.15)", outlineOffset: "0px", margin: "0 auto" }}
+          />
         </Link>
         <p style={{ fontSize: "0.72rem", color: "rgba(168,197,176,0.4)", marginTop: "8px" }}>
-          © {new Date().getFullYear()} Cocoon Original Vietnam
+          © {new Date().getFullYear()} Cocoon Skin Routine
         </p>
       </footer>
     </div>

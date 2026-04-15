@@ -1,8 +1,9 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 import Link from "next/link"
 
 export const metadata: Metadata = {
-  title: "Cà Phê Đắk Lắk trong Mỹ Phẩm: Bí Quyết Làm Đẹp Từ Thiên Nhiên Việt Nam | Cocoon Vietnam",
+  title: "Cà Phê Đắk Lắk trong Mỹ Phẩm: Bí Quyết Làm Đẹp Từ Thiên Nhiên Việt Nam | Cocoon Skin Routine",
   description:
     "Khám phá cách cà phê Đắk Lắk trở thành thành phần chăm sóc da đỉnh cao — từ caffeine chống lão hóa đến antioxidant tẩy tế bào chết tự nhiên. Bí quyết làm đẹp từ vùng đất bazan.",
   openGraph: {
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
       "Khám phá cách cà phê Đắk Lắk trở thành thành phần chăm sóc da đỉnh cao — từ caffeine chống lão hóa đến antioxidant tẩy tế bào chết tự nhiên.",
     type: "article",
     locale: "vi_VN",
-    siteName: "Cocoon Vietnam",
+    siteName: "Cocoon Skin Routine",
   },
 }
 
@@ -22,9 +23,13 @@ export default function BlogPost() {
       <header style={{ backgroundColor: "#1a3d2b", padding: "16px 0" }}>
         <div style={{ maxWidth: "720px", margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <Link href="/" style={{ textDecoration: "none" }}>
-            <span style={{ fontFamily: "var(--font-lora)", fontSize: "1.4rem", fontWeight: 600, fontStyle: "italic", color: "white", letterSpacing: "-0.02em" }}>
-              Cocoon
-            </span>
+            <Image
+              src="/cocoon logo.jpg"
+              alt="Cocoon Skin Routine"
+              width={40}
+              height={40}
+              style={{ borderRadius: "9999px", objectFit: "cover", display: "block", outline: "2px solid rgba(255,255,255,0.15)", outlineOffset: "0px" }}
+            />
           </Link>
           <Link href="/blog" style={{ fontSize: "0.8rem", color: "rgba(168,197,176,0.7)", textDecoration: "none", letterSpacing: "0.06em", textTransform: "uppercase" }}>
             ← Blog
@@ -217,7 +222,7 @@ export default function BlogPost() {
             Khám phá sản phẩm
           </p>
           <a
-            href="https://cocoonvietnam.com/en/collections/all"
+            href="https://kimquyenxinhdep.io.vn/"
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -240,13 +245,17 @@ export default function BlogPost() {
 
       {/* Footer */}
       <footer style={{ backgroundColor: "#1a3d2b", padding: "24px 0", textAlign: "center" }}>
-        <Link href="/" style={{ textDecoration: "none" }}>
-          <span style={{ fontFamily: "var(--font-lora)", fontSize: "1.2rem", fontWeight: 600, fontStyle: "italic", color: "white" }}>
-            Cocoon
-          </span>
+        <Link href="/" style={{ textDecoration: "none", display: "inline-block" }}>
+          <Image
+            src="/cocoon logo.jpg"
+            alt="Cocoon Skin Routine"
+            width={40}
+            height={40}
+            style={{ borderRadius: "9999px", objectFit: "cover", display: "block", outline: "2px solid rgba(255,255,255,0.15)", outlineOffset: "0px", margin: "0 auto" }}
+          />
         </Link>
         <p style={{ fontSize: "0.72rem", color: "rgba(168,197,176,0.4)", marginTop: "8px" }}>
-          © {new Date().getFullYear()} Cocoon Original Vietnam
+          © {new Date().getFullYear()} Cocoon Skin Routine
         </p>
       </footer>
     </div>
