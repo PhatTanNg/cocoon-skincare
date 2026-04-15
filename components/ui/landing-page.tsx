@@ -1377,7 +1377,7 @@ export function CocoonLanding() {
                   className="mt-5 max-w-sm leading-relaxed"
                   style={{ color: C.warmGray, fontSize: "0.95rem" }}
                 >
-                  Khám phá hơn 50 sản phẩm thuần chay được hàng triệu người Việt tin dùng.
+                  Khám phá kiến thức làm đẹp từ thiên nhiên Việt Nam qua các bài viết chuyên sâu của Cocoon.
                 </motion.p>
                 <motion.div variants={fadeUp} className="mt-8 flex flex-wrap gap-3">
                   <Button
@@ -1388,22 +1388,22 @@ export function CocoonLanding() {
                       boxShadow: "0 4px 18px rgba(26,61,43,0.3)",
                       letterSpacing: "0.025em",
                     }}
-                    onClick={() => window.open("https://kimquyenxinhdep.io.vn/", "_blank")}
+                    onClick={() => window.location.href = "/blog"}
                   >
-                    Khám phá bộ sưu tập
+                    Đọc bài viết mới nhất
                   </Button>
                   <Button
                     size="lg"
                     variant="outline"
                     className="rounded-full px-8 font-semibold"
                     style={{ borderColor: `${C.forest}45`, color: C.forest, letterSpacing: "0.025em" }}
-                    onClick={() => window.open("https://shopee.vn/cocoonvietnam", "_blank")}
+                    onClick={() => window.location.href = "#about"}
                   >
-                    Mua trên Shopee
+                    Tìm hiểu về Cocoon
                   </Button>
                 </motion.div>
                 <motion.div variants={fadeUp} className="mt-8 flex flex-wrap items-center gap-5">
-                  {["700K+ đánh giá", "Thuần chay 100%", "Giao hàng toàn quốc"].map((item) => (
+                  {["Thuần chay 100%", "Không thử trên động vật", "Nguyên liệu Việt Nam"].map((item) => (
                     <div key={item} className="flex items-center gap-2">
                       <div className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: C.honey }} />
                       <span style={{ fontSize: "0.75rem", color: C.sage, fontWeight: 500 }}>{item}</span>
