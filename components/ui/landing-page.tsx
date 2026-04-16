@@ -196,7 +196,7 @@ const navLinks = [
   { label: "Sản phẩm", href: "#products" },
   { label: "Về chúng tôi", href: "#about" },
   { label: "Đánh giá", href: "#social-proof" },
-  { label: "Blog", href: "/blog" },
+  { label: "Blog", href: "https://kimquyenxinhdep.io.vn/tin-tuc/" },
   { label: "Liên hệ", href: "#contact" },
 ]
 
@@ -311,135 +311,16 @@ export function CocoonLanding() {
       style={{ fontFamily: "var(--font-be-vietnam-pro)", backgroundColor: C.cream, color: C.bark }}
       className="flex min-h-screen flex-col"
     >
-      {/* ── Header ── */}
-      <motion.header
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease }}
-        className="sticky top-0 z-50 w-full transition-all duration-300"
-        style={{
-          backgroundColor: scrolled ? "rgba(250,246,238,0.96)" : "rgba(250,246,238,0.7)",
-          backdropFilter: "blur(16px)",
-          borderBottom: scrolled ? `1px solid rgba(26,61,43,0.08)` : "1px solid transparent",
-          boxShadow: scrolled ? "0 2px 24px rgba(26,61,43,0.06)" : "none",
-        }}
-      >
-        <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/cocoon logo.jpg"
-              alt="Cocoon Skin Routine"
-              width={44}
-              height={44}
-              className="rounded-full object-cover"
-              priority
-            />
-          </Link>
-
-          <nav className="hidden items-center gap-0.5 md:flex">
-            {navLinks.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="rounded-xl px-3.5 py-2 text-sm font-medium transition-colors hover:text-[#1a3d2b]"
-                style={{ color: C.warmGray }}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="hidden items-center gap-2 md:flex">
-            <Link
-              href="https://kimquyenxinhdep.io.vn/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-xl px-3 py-2 font-medium text-sm transition-colors"
-              style={{ color: C.sage }}
-            >
-              Tìm hiểu thêm
-            </Link>
-            <Link
-              href="https://shopee.vn/cocoonvietnam"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-full px-5 py-2.5 font-semibold text-white text-sm transition-all whitespace-nowrap"
-              style={{
-                background: `linear-gradient(135deg, ${C.forest} 0%, #2d6a4f 100%)`,
-                boxShadow: "0 2px 10px rgba(26,61,43,0.25)",
-                letterSpacing: "0.02em",
-              }}
-            >
-              Mua ngay
-            </Link>
-          </div>
-
-          <button
-            className="flex rounded-xl p-2 transition-colors md:hidden"
-            style={{ color: C.forest }}
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
-        </div>
-      </motion.header>
-
-      {/* ── Mobile Menu ── */}
-      {isMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-40 pt-16 md:hidden"
-          style={{ backgroundColor: C.cream }}
+      {/* ── Back to Home ── */}
+      <div className="sticky top-0 z-50 px-4 py-3" style={{ backgroundColor: C.cream, borderBottom: `1px solid rgba(26,61,43,0.06)` }}>
+        <a
+          href="https://kimquyenxinhdep.io.vn/"
+          className="inline-flex items-center gap-1.5 text-sm font-medium transition-colors hover:opacity-70"
+          style={{ color: C.forest }}
         >
-          <nav className="container mx-auto grid gap-1 px-4 py-6">
-            {navLinks.map((item, i) => (
-              <motion.div
-                key={item.href}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.07 }}
-              >
-                <Link
-                  href={item.href}
-                  className="flex items-center justify-between rounded-2xl px-4 py-3.5 text-base font-medium transition-colors hover:bg-[#eef4f0]"
-                  style={{ color: C.bark }}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.label}
-                  <ChevronRight className="h-4 w-4" style={{ color: C.sage }} />
-                </Link>
-              </motion.div>
-            ))}
-            <div className="mt-4 flex flex-col gap-2.5">
-              <Link
-                href="https://kimquyenxinhdep.io.vn/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full rounded-full px-4 py-2.5 font-medium text-center transition-all border"
-                style={{ borderColor: `${C.forest}40`, color: C.forest, letterSpacing: "0.02em" }}
-              >
-                Tìm hiểu thêm
-              </Link>
-              <Link
-                href="https://shopee.vn/cocoonvietnam"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full rounded-full px-4 py-2.5 font-semibold text-white text-center transition-all"
-                style={{
-                  background: `linear-gradient(135deg, ${C.forest} 0%, #2d6a4f 100%)`,
-                  boxShadow: "0 2px 10px rgba(26,61,43,0.25)",
-                  letterSpacing: "0.02em",
-                }}
-              >
-                Mua ngay
-              </Link>
-            </div>
-          </nav>
-        </motion.div>
-      )}
+          ← Quay lại trang chủ
+        </a>
+      </div>
 
       <main className="flex-1">
         {/* ── Hero ── */}
@@ -756,50 +637,67 @@ export function CocoonLanding() {
             >
               {[
                 {
-                  icon: <Leaf className="h-7 w-7" style={{ color: C.forest }} />,
+                  icon: <Leaf className="h-6 w-6" style={{ color: C.forest }} />,
                   title: "100% Thuần Chay",
                   desc: "Không thành phần từ động vật. Chứng nhận bởi The Vegan Society — tiêu chuẩn quốc tế khắt khe nhất.",
+                  bg: C.creamSection,
+                  border: `1px solid rgba(26,61,43,0.1)`,
                 },
                 {
-                  icon: <Globe className="h-7 w-7" style={{ color: C.forest }} />,
+                  icon: <Globe className="h-6 w-6" style={{ color: C.forest }} />,
                   title: "Nguyên Liệu Việt Nam",
                   desc: "Cà phê Đắk Lắk, sen Hậu Giang, bưởi, bí đao, khổ qua — hương vị từ mảnh đất hình chữ S.",
+                  bg: "white",
+                  border: `1px solid rgba(26,61,43,0.06)`,
                 },
                 {
-                  icon: <ShieldCheck className="h-7 w-7" style={{ color: C.forest }} />,
+                  icon: <ShieldCheck className="h-6 w-6" style={{ color: C.forest }} />,
                   title: "3 Chứng Nhận Quốc Tế",
                   desc: "Thương hiệu Việt Nam đầu tiên đạt đồng thời Leaping Bunny, PETA và The Vegan Society.",
+                  bg: "white",
+                  border: `1px solid rgba(26,61,43,0.06)`,
                 },
                 {
-                  icon: <Heart className="h-7 w-7" style={{ color: C.forest }} />,
+                  icon: <Heart className="h-6 w-6" style={{ color: C.honey }} />,
                   title: "Không Hóa Chất Độc Hại",
                   desc: "Không sulfate, không paraben, không hương liệu tổng hợp. An toàn cho da nhạy cảm và thai phụ.",
+                  bg: "#fef9ec",
+                  border: `1px solid rgba(197,150,45,0.15)`,
                 },
               ].map((item, i) => (
                 <motion.div
                   key={i}
                   variants={fadeUp}
-                  whileHover={{ y: -6, boxShadow: `0 20px 40px rgba(26,61,43,0.1)` }}
+                  whileHover={{ y: -5 }}
                   className="flex flex-col rounded-3xl p-7 transition-all duration-300"
                   style={{
-                    backgroundColor: "white",
-                    border: `1px solid rgba(26,61,43,0.06)`,
-                    boxShadow: `0 4px 20px rgba(26,61,43,0.05)`,
+                    backgroundColor: item.bg,
+                    border: item.border,
+                    boxShadow: `0 2px 12px rgba(26,61,43,0.04)`,
                   }}
                 >
-                  <div
-                    className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl"
-                    style={{ backgroundColor: C.creamSection }}
-                  >
+                  <div className="mb-5 flex items-center justify-between">
                     {item.icon}
+                    <span
+                      style={{
+                        fontFamily: "var(--font-lora)",
+                        fontSize: "1.8rem",
+                        fontWeight: 700,
+                        color: `${C.forest}10`,
+                        lineHeight: 1,
+                      }}
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
                   </div>
                   <h3
                     style={{
                       fontFamily: "var(--font-lora)",
-                      fontSize: "1.15rem",
+                      fontSize: "1.1rem",
                       fontWeight: 700,
                       color: C.forest,
                       marginBottom: "10px",
+                      lineHeight: 1.3,
                     }}
                   >
                     {item.title}
@@ -894,7 +792,7 @@ export function CocoonLanding() {
                       {product.tag}
                     </span>
                     <a
-                      href="https://kimquyenxinhdep.io.vn/"
+                      href="https://kimquyenxinhdep.io.vn/san-pham-2/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 opacity-0 shadow-md transition-all duration-200 hover:scale-110 group-hover:opacity-100"
@@ -934,7 +832,7 @@ export function CocoonLanding() {
                         {product.price}
                       </span>
                       <a
-                        href="https://kimquyenxinhdep.io.vn/"
+                        href="https://kimquyenxinhdep.io.vn/san-pham-2/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="h-7 px-3 text-xs font-medium rounded-full transition-all border text-center inline-flex items-center whitespace-nowrap"
@@ -991,7 +889,7 @@ export function CocoonLanding() {
             <div className="mt-8 md:mt-12 flex justify-center">
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
                 <a
-                  href="https://kimquyenxinhdep.io.vn/"
+                  href="https://kimquyenxinhdep.io.vn/san-pham-2/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group rounded-full px-10 py-3 font-semibold text-white text-center transition-all inline-block whitespace-nowrap"
@@ -1034,33 +932,25 @@ export function CocoonLanding() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
+              className="grid gap-px sm:grid-cols-2 lg:grid-cols-4 overflow-hidden rounded-3xl"
+              style={{ border: `1px solid rgba(26,61,43,0.08)` }}
             >
               {awards.map((award, i) => (
                 <motion.div
                   key={i}
                   variants={fadeUp}
-                  whileHover={{ y: -5, boxShadow: `0 20px 40px rgba(26,61,43,0.1)` }}
-                  className="flex flex-col items-center rounded-3xl p-7 text-center transition-all duration-300"
-                  style={{
-                    backgroundColor: "white",
-                    border: `1px solid rgba(26,61,43,0.06)`,
-                    boxShadow: `0 4px 20px rgba(26,61,43,0.05)`,
-                  }}
+                  className="flex flex-col p-7 transition-colors duration-200 hover:bg-[#eef4f0]"
+                  style={{ backgroundColor: "white" }}
                 >
                   <div
-                    className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl"
-                    style={{ backgroundColor: "#fef9ec" }}
-                  >
-                    <Award className="h-6 w-6" style={{ color: C.honey }} />
-                  </div>
-                  <div
                     style={{
-                      fontSize: "0.72rem",
+                      fontFamily: "var(--font-lora)",
+                      fontSize: "3rem",
                       fontWeight: 700,
-                      color: C.sage,
-                      letterSpacing: "0.1em",
-                      textTransform: "uppercase",
+                      color: `${C.honey}22`,
+                      lineHeight: 1,
+                      marginBottom: "16px",
+                      letterSpacing: "-0.03em",
                     }}
                   >
                     {award.year}
@@ -1068,17 +958,19 @@ export function CocoonLanding() {
                   <div
                     style={{
                       fontFamily: "var(--font-lora)",
-                      fontSize: "1.05rem",
+                      fontSize: "1rem",
                       fontWeight: 700,
                       color: C.forest,
-                      marginTop: "6px",
+                      marginBottom: "6px",
+                      lineHeight: 1.3,
                     }}
                   >
                     {award.title}
                   </div>
-                  <div style={{ fontSize: "0.8rem", color: C.warmGray, marginTop: "5px", lineHeight: 1.5 }}>
+                  <div style={{ fontSize: "0.8rem", color: C.warmGray, lineHeight: 1.6, flex: 1 }}>
                     {award.desc}
                   </div>
+                  <div className="mt-5 h-0.5 w-8 rounded-full" style={{ backgroundColor: C.honey }} />
                 </motion.div>
               ))}
             </motion.div>
@@ -1225,13 +1117,15 @@ export function CocoonLanding() {
                 </motion.h2>
               </div>
               <motion.div variants={fadeUp}>
-                <Link
-                  href="/blog"
+                <a
+                  href="https://kimquyenxinhdep.io.vn/tin-tuc/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="hidden sm:flex items-center gap-1.5 text-sm font-semibold transition-opacity hover:opacity-60 whitespace-nowrap"
                   style={{ color: C.forest }}
                 >
                   Xem tất cả <ArrowUpRight className="h-4 w-4" />
-                </Link>
+                </a>
               </motion.div>
             </motion.div>
 
@@ -1253,7 +1147,7 @@ export function CocoonLanding() {
                     className="min-w-full snap-start md:min-w-0 overflow-hidden rounded-3xl bg-white transition-shadow duration-300 hover:shadow-lg"
                     style={{ boxShadow: "0 2px 16px rgba(26,61,43,0.07)", border: `1px solid rgba(26,61,43,0.05)` }}
                   >
-                    <Link href={`/blog/${post.slug}`} className="flex flex-col h-full">
+                    <a href="https://kimquyenxinhdep.io.vn/tin-tuc/" target="_blank" rel="noopener noreferrer" className="flex flex-col h-full">
                       <div className="relative overflow-hidden" style={{ height: "180px" }}>
                         <Image
                           src={post.image}
@@ -1287,7 +1181,7 @@ export function CocoonLanding() {
                           </span>
                         </div>
                       </div>
-                    </Link>
+                    </a>
                   </motion.div>
                 ))}
               </div>
@@ -1326,13 +1220,15 @@ export function CocoonLanding() {
             </div>
 
             <div className="mt-6 flex justify-center sm:hidden">
-              <Link
-                href="/blog"
+              <a
+                href="https://kimquyenxinhdep.io.vn/tin-tuc/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center gap-1.5 text-sm font-semibold"
                 style={{ color: C.forest }}
               >
                 Xem tất cả bài viết <ArrowUpRight className="h-4 w-4" />
-              </Link>
+              </a>
             </div>
           </div>
         </section>
@@ -1388,7 +1284,7 @@ export function CocoonLanding() {
                       boxShadow: "0 4px 18px rgba(26,61,43,0.3)",
                       letterSpacing: "0.025em",
                     }}
-                    onClick={() => window.location.href = "/blog"}
+                    onClick={() => window.location.href = "https://kimquyenxinhdep.io.vn/tin-tuc/"}
                   >
                     Đọc bài viết mới nhất
                   </Button>
@@ -1467,6 +1363,12 @@ export function CocoonLanding() {
                       label: "Website",
                       content: "kimquyenxinhdep.io.vn",
                       href: "https://kimquyenxinhdep.io.vn/",
+                    },
+                    {
+                      icon: <FacebookIcon className="h-5 w-5" />,
+                      label: "Fanpage",
+                      content: "Cocoon Skin Routine",
+                      href: "https://www.facebook.com/CocoonSkinRoutine",
                     },
                   ].map((item, i) => (
                     <motion.div key={i} whileHover={{ x: 5 }} className="flex items-start gap-4">
@@ -1648,250 +1550,6 @@ export function CocoonLanding() {
 
       </main>
 
-      {/* ── Footer ── */}
-      <footer
-        className="relative overflow-hidden"
-        style={{
-          background: `
-            radial-gradient(ellipse 70% 55% at 12% 45%, rgba(82,121,111,0.3) 0%, transparent 55%),
-            radial-gradient(ellipse 55% 70% at 88% 80%, rgba(14,32,20,0.65) 0%, transparent 50%),
-            radial-gradient(ellipse 35% 35% at 55% 5%, rgba(26,61,43,0.45) 0%, transparent 45%),
-            linear-gradient(168deg, #1e4832 0%, #152d1e 48%, #172f21 100%)
-          `,
-        }}
-      >
-        {/* Giant ghost watermark */}
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden select-none" aria-hidden>
-          <span
-            style={{
-              fontFamily: "var(--font-lora)",
-              fontSize: "clamp(100px, 22vw, 340px)",
-              fontStyle: "italic",
-              fontWeight: 700,
-              color: "rgba(255,255,255,0.02)",
-              letterSpacing: "-0.04em",
-              lineHeight: 1,
-              whiteSpace: "nowrap",
-            }}
-          >
-            Cocoon
-          </span>
-        </div>
-
-        {/* Botanical — branch top-right */}
-        <svg className="pointer-events-none absolute -right-10 -top-4 select-none" width="300" height="400" viewBox="0 0 300 400" fill="none" aria-hidden style={{ opacity: 0.045 }}>
-          <path d="M150 400 L150 55" stroke="white" strokeWidth="1.2" strokeLinecap="round"/>
-          <path d="M150 110 C182 84 224 90 242 122 C224 140 188 140 150 110Z" fill="white"/>
-          <path d="M150 170 C116 146 78 154 62 188 C80 204 116 202 150 170Z" fill="white"/>
-          <path d="M150 230 C180 208 218 214 234 248 C218 262 184 260 150 230Z" fill="white"/>
-          <path d="M150 290 C122 270 88 276 74 308 C90 322 122 320 150 290Z" fill="white"/>
-          <path d="M150 350 C168 332 196 336 206 358 C196 368 170 368 150 350Z" fill="white"/>
-        </svg>
-
-        {/* Botanical — lotus bottom-left */}
-        <svg className="pointer-events-none absolute -bottom-10 -left-10 select-none" width="240" height="240" viewBox="0 0 240 240" fill="none" aria-hidden style={{ opacity: 0.04 }}>
-          <ellipse cx="120" cy="120" rx="46" ry="74" stroke="white" strokeWidth="0.9" fill="none"/>
-          <ellipse cx="120" cy="120" rx="46" ry="74" stroke="white" strokeWidth="0.9" fill="none" transform="rotate(30 120 120)"/>
-          <ellipse cx="120" cy="120" rx="46" ry="74" stroke="white" strokeWidth="0.9" fill="none" transform="rotate(60 120 120)"/>
-          <ellipse cx="120" cy="120" rx="46" ry="74" stroke="white" strokeWidth="0.9" fill="none" transform="rotate(90 120 120)"/>
-          <ellipse cx="120" cy="120" rx="46" ry="74" stroke="white" strokeWidth="0.9" fill="none" transform="rotate(120 120 120)"/>
-          <ellipse cx="120" cy="120" rx="46" ry="74" stroke="white" strokeWidth="0.9" fill="none" transform="rotate(150 120 120)"/>
-          <circle cx="120" cy="120" r="11" stroke="white" strokeWidth="1" fill="none"/>
-        </svg>
-
-        {/* Botanical — small sprig center */}
-        <svg className="pointer-events-none absolute left-[42%] top-[28%] select-none" width="90" height="130" viewBox="0 0 90 130" fill="none" aria-hidden style={{ opacity: 0.028 }}>
-          <path d="M45 130 L45 18" stroke="white" strokeWidth="1" strokeLinecap="round"/>
-          <path d="M45 65 C62 50 82 56 88 78 C72 84 54 76 45 65Z" fill="white"/>
-          <path d="M45 100 C30 86 12 92 6 112 C20 118 38 112 45 100Z" fill="white"/>
-        </svg>
-
-        {/* Vertical "Est. 2013" accent */}
-        <div className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 hidden lg:block select-none" aria-hidden>
-          <span
-            style={{
-              writingMode: "vertical-lr",
-              transform: "rotate(180deg)",
-              display: "block",
-              fontSize: "0.55rem",
-              letterSpacing: "0.32em",
-              textTransform: "uppercase",
-              color: "rgba(168,197,176,0.16)",
-              fontWeight: 600,
-            }}
-          >
-            Est. 2013 · Thuần Chay Việt Nam
-          </span>
-        </div>
-
-        {/* Main content */}
-        <div className="relative z-10 container mx-auto px-4 md:px-6">
-
-          {/* Top: wordmark + tagline */}
-          <div
-            className="flex flex-col gap-2 py-6 lg:flex-row lg:items-end lg:justify-between lg:py-10"
-            style={{ borderBottom: `1px solid rgba(197,150,45,0.18)` }}
-          >
-            <Link href="/" className="flex items-center">
-              <Image
-                src="/cocoon logo.jpg"
-                alt="Cocoon Skin Routine"
-                width={56}
-                height={56}
-                className="rounded-full object-cover ring-2 ring-white/10"
-              />
-            </Link>
-            <p className="hidden lg:block" style={{ fontSize: "0.72rem", color: `${C.lightMint}38`, letterSpacing: "0.06em", textTransform: "uppercase" }}>
-              Thuần chay &nbsp;·&nbsp; Thiên nhiên Việt Nam &nbsp;·&nbsp; Leaping Bunny &nbsp;·&nbsp; PETA &nbsp;·&nbsp; The Vegan Society
-            </p>
-          </div>
-
-          {/* Grid */}
-          <div className="grid grid-cols-2 gap-5 py-8 lg:grid-cols-[2fr_1fr_1fr_1.6fr] lg:gap-10 lg:py-12">
-
-            {/* Brand */}
-            <div className="col-span-2 lg:col-span-1 space-y-5">
-              <p style={{ fontSize: "0.875rem", color: `${C.lightMint}55`, lineHeight: 1.9 }}>
-                Mỹ phẩm thuần chay từ thiên nhiên Việt Nam. Chứng nhận Leaping Bunny, PETA và The Vegan Society.
-              </p>
-              <div className="flex flex-col gap-1.5">
-                <a href="mailto:hello@cocoonvietnam.com" style={{ fontSize: "0.8rem", color: `${C.lightMint}55` }}>
-                  hello@cocoonvietnam.com
-                </a>
-                <span style={{ fontSize: "0.8rem", color: `${C.lightMint}44` }}>1800 6800 (miễn phí)</span>
-              </div>
-              <div className="flex gap-2.5">
-                {[
-                  { href: "https://www.facebook.com/CocoonSkinRoutine", label: "Facebook", icon: <FacebookIcon className="h-4 w-4" /> },
-                  { href: "https://www.tiktok.com/@trucanh2401?_r=1&_t=ZS-95YuxGC8OA8", label: "TikTok", icon: <TiktokIcon className="h-4 w-4" /> },
-                ].map((social) => (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={social.label}
-                    className="flex items-center justify-center rounded-full transition-all hover:scale-110 hover:bg-white/10"
-                    style={{ width: "36px", height: "36px", border: "1px solid rgba(168,197,176,0.2)", color: C.lightMint }}
-                  >
-                    {social.icon}
-                  </a>
-                ))}
-              </div>
-              <div className="hidden lg:block space-y-2.5">
-                <div className="h-px w-8" style={{ backgroundColor: `${C.honey}55` }} />
-                {["Leaping Bunny Certified", "PETA Cruelty Free", "The Vegan Society"].map((cert) => (
-                  <div key={cert} className="flex items-center gap-2.5">
-                    <div className="h-1 w-1 flex-shrink-0 rounded-full" style={{ backgroundColor: `${C.honey}80` }} />
-                    <span style={{ fontSize: "0.75rem", color: `${C.lightMint}44` }}>{cert}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Products nav */}
-            <div>
-              <h3 style={{ fontSize: "0.62rem", fontWeight: 700, color: `${C.honey}bb`, textTransform: "uppercase", letterSpacing: "0.2em", marginBottom: "20px" }}>
-                Sản phẩm
-              </h3>
-              <nav className="flex flex-col gap-3">
-                {["Chăm sóc da mặt", "Chăm sóc tóc", "Chống nắng", "Tẩy trang", "Tẩy da chết"].map((item) => (
-                  <a
-                    key={item}
-                    href="https://kimquyenxinhdep.io.vn/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-center gap-2 transition-colors hover:text-white"
-                    style={{ fontSize: "0.875rem", color: `${C.lightMint}55` }}
-                  >
-                    <span className="h-px w-0 flex-shrink-0 transition-all duration-300 group-hover:w-4" style={{ backgroundColor: C.honey }} />
-                    {item}
-                  </a>
-                ))}
-              </nav>
-            </div>
-
-            {/* Brand nav */}
-            <div>
-              <h3 style={{ fontSize: "0.62rem", fontWeight: 700, color: `${C.honey}bb`, textTransform: "uppercase", letterSpacing: "0.2em", marginBottom: "20px" }}>
-                Thương hiệu
-              </h3>
-              <nav className="flex flex-col gap-3">
-                {[
-                  { label: "Câu chuyện của chúng tôi", href: "#about", external: false },
-                  { label: "Giải thưởng", href: "#social-proof", external: false },
-                  { label: "Blog", href: "/blog", external: false },
-                  { label: "Website chính thức", href: "https://kimquyenxinhdep.io.vn/", external: true },
-                ].map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    target={item.external ? "_blank" : undefined}
-                    rel={item.external ? "noopener noreferrer" : undefined}
-                    className="group flex items-center gap-2 transition-colors hover:text-white"
-                    style={{ fontSize: "0.875rem", color: `${C.lightMint}55` }}
-                  >
-                    <span className="h-px w-0 flex-shrink-0 transition-all duration-300 group-hover:w-4" style={{ backgroundColor: C.honey }} />
-                    {item.label}
-                  </a>
-                ))}
-              </nav>
-            </div>
-
-            {/* Newsletter */}
-            <div className="col-span-2 lg:col-span-1 space-y-4">
-              <h3 style={{ fontSize: "0.62rem", fontWeight: 700, color: `${C.honey}bb`, textTransform: "uppercase", letterSpacing: "0.2em" }}>
-                Nhận ưu đãi độc quyền
-              </h3>
-              <p style={{ fontSize: "0.85rem", color: `${C.lightMint}50`, lineHeight: 1.8 }}>
-                Đăng ký nhận thông tin mới nhất về sản phẩm và khuyến mãi từ Cocoon.
-              </p>
-              <form className="relative" onSubmit={(e) => e.preventDefault()}>
-                <Input
-                  type="email"
-                  placeholder="Email của bạn"
-                  className="w-full rounded-xl pr-14"
-                  style={{
-                    backgroundColor: "rgba(255,255,255,0.05)",
-                    border: "1px solid rgba(168,197,176,0.18)",
-                    color: "white",
-                    fontSize: "0.85rem",
-                  }}
-                />
-                <Button
-                  type="submit"
-                  size="sm"
-                  className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-lg"
-                  style={{ backgroundColor: C.honey, color: "white" }}
-                >
-                  <Send className="h-3.5 w-3.5" />
-                </Button>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom bar */}
-        <div style={{ borderTop: `1px solid rgba(197,150,45,0.12)` }}>
-          <div className="container mx-auto flex flex-col items-center justify-between gap-2 px-4 py-5 md:flex-row md:px-6">
-            <p style={{ fontSize: "0.72rem", color: `${C.lightMint}28`, letterSpacing: "0.03em" }}>
-              © {new Date().getFullYear()} Cocoon Skin Routine. Mọi quyền được bảo lưu.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4 md:gap-5">
-              {["Chính sách bảo mật", "Điều khoản sử dụng", "Chính sách đổi trả"].map((item) => (
-                <a
-                  key={item}
-                  href="#"
-                  className="transition-colors hover:text-white"
-                  style={{ fontSize: "0.72rem", color: `${C.lightMint}28` }}
-                >
-                  {item}
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }
